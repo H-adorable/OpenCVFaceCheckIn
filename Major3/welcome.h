@@ -1,0 +1,49 @@
+#ifndef WELCOME_H
+#define WELCOME_H
+
+#include <QWidget>
+
+#include "checklist.h"
+
+namespace Ui {
+class Welcome;
+}
+
+class Welcome : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Welcome(QWidget *parent = 0);
+    ~Welcome();
+
+public slots:
+    // Re-show this welcome window
+    void showAgain(int);
+
+signals:
+    // Number is exist in the system
+    void confirmed(QString);
+
+    // Number is not sexist in the system
+    void refused(QString);
+
+    // Administor request into the system
+    void administor(int);
+
+private slots:
+    void on_checkIn_clicked();
+
+    void on_close_clicked();
+
+private:
+    Ui::Welcome *ui;
+
+    // number holds the input number
+    QString number;
+
+    // CheckList class containing SQLite methods
+    CheckList check;
+};
+
+#endif // WELCOME_H
