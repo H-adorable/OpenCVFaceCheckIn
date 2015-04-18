@@ -1,6 +1,8 @@
 #include "welcome.h"
 #include "ui_welcome.h"
 
+#include <QDebug>
+
 Welcome::Welcome(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::Welcome)
@@ -9,47 +11,56 @@ Welcome::Welcome(QWidget *parent) :
 
     // Install the Event Filter on Line editor 'lineIn'
     ui->lineIn->installEventFilter(ui->lineIn);
+    ui->lineIn->setPlaceholderText("请输入编号");
+    qDebug() << "Welcome born.";
 }
 
 Welcome::~Welcome()
 {
     delete ui;
+    qDebug() << "Welcome delete.";
 }
 
+// Show Welcome dialog again
 void Welcome::showAgain(int)
-{
-
+{   
+    // 1 = CameraGet, 2 = Authentication, 3 = Alert
+//    ui->lineIn->setText("请输入编号");
+    show();
 }
 
-bool Welcome::eventFilter(QObject *obj, QEvent *event){
-    // If 'lineIn' gets 'FocusIn' then clear it
-    if(obj == ui->lineIn){
-        if(event->type() == QEvent::FocusIn){
-            qDebug() << "Line In cleared";
-            ui->lineIn->clear();
-            return true
-        }
-    }
+//bool Welcome::eventFilter(QObject *obj, QEvent *event){
+//    // If 'lineIn' gets 'FocusIn' then clear it
+//    if(obj == ui->lineIn){
+//        if(event->type() == QEvent::FocusIn){
+//            qDebug() << "Line In cleared";
+//            ui->lineIn->clear();
+//            return true;
+//        }
+//    }
 
-    // The default solution
-    else{
-        return QObject::eventFilter(obj, event);
-    }
-}
+//    // The default solution
+//    else{
+//        return QObject::eventFilter(obj, event);
+//    }
+//}
 
 void Welcome::on_checkIn_clicked()
 {
     number = ui->lineIn->text();
     qDebug() << "get the number:\t" << number;
     if(check.isExist(number)){
-        emit confirmed(number);
-        qDebug() << "Confirmed signal sent";
-        hide();
+        close();
+        qDebug() << "Welcome closed.";
+        emit confirmed(1, number);
+        qDebug() << "Confirmed signal sent.";
     }
     else{
-        emit refused(number);
-        qDebug() << "Refused signal sent";
-        hide();
+        emit refused(1, number);
+        qDebug() << "Refused signal sent.";
+        close();
+        qDebug() << "Welcome closed.";
+
     }
 }
 

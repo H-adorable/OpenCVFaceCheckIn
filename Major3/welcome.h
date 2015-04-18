@@ -23,10 +23,10 @@ public slots:
 
 signals:
     // Number is exist in the system
-    void confirmed(QString);
+    void confirmed(int, QString);
 
     // Number is not sexist in the system
-    void refused(QString);
+    void refused(int, QString);
 
     // Administor request into the system
     void administor(int);
@@ -44,6 +44,9 @@ private:
 
     // CheckList class containing SQLite methods
     CheckList check;
+
+    // Event Filter
+//    bool eventFilter(QObject *, QEvent *);
 };
 
 #endif // WELCOME_H

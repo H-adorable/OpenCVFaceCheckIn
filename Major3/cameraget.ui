@@ -34,6 +34,12 @@
      <height>60</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
    <property name="frameShape">
     <enum>QFrame::WinPanel</enum>
    </property>
@@ -46,8 +52,11 @@
    <property name="text">
     <string/>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="camBack">
    <property name="geometry">
     <rect>
      <x>30</x>

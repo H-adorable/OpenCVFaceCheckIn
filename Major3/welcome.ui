@@ -68,6 +68,21 @@
      <height>30</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>Consolas</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+   <property name="mouseTracking">
+    <bool>false</bool>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::StrongFocus</enum>
+   </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QPushButton" name="checkIn">
    <property name="geometry">

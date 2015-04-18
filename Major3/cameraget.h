@@ -2,9 +2,10 @@
 #define CAMERAGET_H
 
 #include <QDialog>
-#include <QTime>
-#include <opencv2/core/core.hpp>
-#include <opencv2/highgui/highgui.hpp>
+#include <QTimer>
+#include <core/core.hpp>
+#include <highgui/highgui.hpp>
+#include <imgproc/imgproc.hpp>
 
 #include "face.h"
 
@@ -22,7 +23,7 @@ public:
 
 public slots:
     // Get the information and show it on the 'hint'
-    void inform(QString);
+//    void inform(QString);
 
     // Start with arguments
     void start(int, QString);
@@ -39,6 +40,17 @@ signals:
 
     // When face matching failed, emit with number
     void refused(QString);
+
+    // When 1 frame processed
+    void camera(int);
+
+private slots:
+    void on_back_clicked();
+
+    void on_cancel_clicked();
+
+    // Show the feed back of camera
+    void getCamera(int);
 
 private:
     Ui::CameraGet *ui;
@@ -58,8 +70,12 @@ private:
     // Face recognization related algorithms
     Face face;
 
+    // Face image
+    cv::Mat faceBuffer;
+
     // Camera cpture stream object
     cv::VideoCapture cap;
+
 
 };
 

@@ -10,3 +10,9 @@ CheckList::~CheckList()
 
 }
 
+bool CheckList::isExist(QString)
+{
+    return true;
+
+}
+
