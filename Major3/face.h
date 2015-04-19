@@ -2,9 +2,16 @@
 #define FACE_H
 
 #include <core/core.hpp>
-#include <highgui.h>
+#include <highgui/highgui.hpp>
 #include <nonfree/features2d.hpp>
 #include <nonfree/nonfree.hpp>
+#include <imgproc/imgproc.hpp>
+#include <objdetect/objdetect.hpp>
+
+#include <cctype>
+#include <iostream>
+#include <iterator>
+#include <stdio.h>
 
 class Face
 {
@@ -26,6 +33,17 @@ public:
 
     // Match two image with keypoints
     bool keyMatch(cv::Mat, cv::Mat);
+
+private:
+    std::string cascadeName;
+
+    // Detect and draw
+    void detectAndDraw(cv::Mat img,
+                       cv::Mat faceSlice,
+                       cv::CascadeClassifier& cascade,
+                       cv::CascadeClassifier& nestedCascade,
+                       double scale,
+                       bool tryflip);
 
 };
 
