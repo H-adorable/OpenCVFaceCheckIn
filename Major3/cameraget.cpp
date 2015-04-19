@@ -23,12 +23,17 @@ CameraGet::CameraGet(QWidget *parent) :
             SIGNAL(getFace(cv::Mat)),
             this,
             SLOT(match()));
+
+    // First 'tic' face detection do not use.
+    tic = 20;
+
 }
 
 CameraGet::~CameraGet()
 {
     cap.release();
     delete ui;
+    qDebug() << "CameraGet delete.";
 }
 
 void CameraGet::start(int x, QString s)
@@ -81,10 +86,12 @@ void CameraGet::getCamera()
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
     // If get a face send the signal.
-    if(isFace){
+    if(isFace && (!tic)){
         qDebug() << "getFace signal sent.(cameraGet)";
         emit getFace(faceBuffer);
     }
+    else
+        --tic;
 
 //    QCoreApplication::processEvents();
 }

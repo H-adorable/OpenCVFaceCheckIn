@@ -86,6 +86,10 @@ private:
     // Camera cpture stream object
     cv::VideoCapture cap;
 
+    // First 'tic' face detection do not use.
+    int tic;
+
+
 
 
 

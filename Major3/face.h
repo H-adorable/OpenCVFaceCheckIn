@@ -38,7 +38,7 @@ private:
     std::string cascadeName;
 
     // Detect and draw
-    void detectAndDraw(cv::Mat img,
+    bool detectAndDraw(cv::Mat img,
                        cv::Mat faceSlice,
                        cv::CascadeClassifier& cascade,
                        cv::CascadeClassifier& nestedCascade,

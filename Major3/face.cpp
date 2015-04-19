@@ -31,12 +31,16 @@ bool Face::detect(cv::Mat input, cv::Mat cut, cv::Mat draw)
     }
 
     input.copyTo( frameCopy );
-    detectAndDraw( frameCopy, cut, cascade, nestedCascade, scale, tryflip );
-    //       cvDestroyWindow("result");
+    if(detectAndDraw( frameCopy, cut, cascade, nestedCascade, scale, tryflip )){
+        frameCopy.copyTo(draw);
 
-    frameCopy.copyTo(draw);
+        return true;
+    }
+    else
+        return false;
+//       cvDestroyWindow("result");
 
-    return true;
+
 
 }
 
@@ -46,7 +50,7 @@ bool Face::imgMatch(cv::Mat, cv::Mat)
 
 }
 
-void Face::detectAndDraw(Mat img, Mat faceSlice,
+bool Face::detectAndDraw(Mat img, Mat faceSlice,
                          CascadeClassifier &cascade,
                          CascadeClassifier &nestedCascade,
                          double scale, bool tryflip)
@@ -94,10 +98,14 @@ void Face::detectAndDraw(Mat img, Mat faceSlice,
     t = (double)cvGetTickCount() - t;
     //    printf( "detection time = %g ms\n", t/((double)cvGetTickFrequency()*1000.) );
     cout << "detection time =" << t/((double)cvGetTickFrequency()*1000.) << "ms" << endl;
-//    bool faceFlag = false;
+    //    bool faceFlag = false;
 
     // Get the pic of face.
-    img(*(faces.begin())).copyTo(faceSlice);
+    if(!faces.empty()){
+        img(*(faces.begin())).copyTo(faceSlice);
+    }
+    else
+        return false;
     for( vector<Rect>::const_iterator r = faces.begin(); r != faces.end(); r++, i++ )
     {
         Mat smallImgROI;
@@ -137,6 +145,6 @@ void Face::detectAndDraw(Mat img, Mat faceSlice,
             circle( img, center, radius, color, 3, 8, 0 );
         }
     }
-    //    cv::imshow( "result", img );
+        cv::imshow( "result", faceSlice );
 }
 
