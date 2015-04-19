@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Welcome</string>
+   <string>欢迎</string>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">

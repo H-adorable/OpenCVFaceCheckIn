@@ -36,6 +36,8 @@ private slots:
 
     void on_close_clicked();
 
+    void on_lineIn_returnPressed();
+
 private:
     Ui::Welcome *ui;
 

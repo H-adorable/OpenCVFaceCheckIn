@@ -13,10 +13,16 @@ CameraGet::CameraGet(QWidget *parent) :
     timer = new QTimer(this);
 
     // Connect so that camBack could show
-//    connect(this,
-//            SIGNAL(camera(int)),
-//            this,
-//            SLOT(getCamera(int)));
+    connect(timer,
+            SIGNAL(timeout()),
+            this,
+            SLOT(getCamera()));
+
+    // Match
+    connect(this,
+            SIGNAL(getFace(cv::Mat)),
+            this,
+            SLOT(match()));
 }
 
 CameraGet::~CameraGet()
@@ -27,13 +33,13 @@ CameraGet::~CameraGet()
 
 void CameraGet::start(int x, QString s)
 {
+    show();
     number = s;
     if(x == 1){
         ui->hint->setText("请面对摄像头并保持严肃");
         cap = cv::VideoCapture(0);
-//        timer->start(33);
+        timer->start(20);
 //        emit camera(1);
-        show();
     }
 //    ulong n = 25*60*0.02;
 //    for(ulong i=0; i<n; ++i)
@@ -42,6 +48,8 @@ void CameraGet::start(int x, QString s)
 
 void CameraGet::on_back_clicked()
 {
+    timer->stop();
+    cap.release();
     close();
     qDebug() << "Camera closed. Back sent";
     emit back(1);
@@ -53,21 +61,52 @@ void CameraGet::on_cancel_clicked()
     close();
 }
 
-void CameraGet::getCamera(int)
+void CameraGet::getCamera()
 {
+    bool isFace;
     // Get image
     cap >> cameraBuffer;
 
-    face.detect(cameraBuffer, faceBuffer, cameraBuffer);
-    cv::cvtColor(cameraBuffer, cameraBuffer, CV_BGR2RGB);
-    displayBuffer = QImage((const uchar*)(cameraBuffer.data),
-                           cameraBuffer.cols,
-                           cameraBuffer.rows,
+    // Detect wheather face exists
+    isFace = face.detect(cameraBuffer,
+                         faceBuffer,
+                         cameraBuffer);
+
+    // Show the camera feedback first
+    cv::cvtColor(cameraBuffer, colorBuffer, CV_BGR2RGB);
+    displayBuffer = QImage((const uchar*)(colorBuffer.data),
+                           colorBuffer.cols,
+                           colorBuffer.rows,
                            QImage::Format_RGB888);
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
-    QCoreApplication::processEvents();
+    // If get a face send the signal.
+    if(isFace){
+        qDebug() << "getFace signal sent.(cameraGet)";
+        emit getFace(faceBuffer);
+    }
 
-    // Send the signal
-//    emit camera(2);
+//    QCoreApplication::processEvents();
+}
+
+void CameraGet::match()
+{
+    if(face.imgMatch(faceBuffer,
+                     check.faceImg(number))){
+        cap.release();
+        timer->stop();
+        close();
+        qDebug() << "Camera closed.";
+        emit confirmed(number);
+        qDebug() << "Confirmed signal sent.(cameraGet)";
+
+    }
+    else{
+        cap.release();
+        timer->stop();
+        close();
+        qDebug() << "Camera closed.";
+        emit refused(number);
+        qDebug() << "Confirmed signal sent.(cameraGet)";
+    }
 }

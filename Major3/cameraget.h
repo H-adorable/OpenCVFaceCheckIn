@@ -8,6 +8,7 @@
 #include <imgproc/imgproc.hpp>
 
 #include "face.h"
+#include "checklist.h"
 
 namespace Ui {
 class CameraGet;
@@ -50,7 +51,10 @@ private slots:
     void on_cancel_clicked();
 
     // Show the feed back of camera
-    void getCamera(int);
+    void getCamera();
+
+    // process the match
+    void match();
 
 private:
     Ui::CameraGet *ui;
@@ -64,17 +68,25 @@ private:
     // Camera Buffer
     cv::Mat cameraBuffer;
 
+    // Color change Buffer
+    cv::Mat colorBuffer;
+
     // Display Buffer
     QImage displayBuffer;
 
     // Face recognization related algorithms
     Face face;
 
+    // Database checking related algorithm
+    CheckList check;
+
     // Face image
     cv::Mat faceBuffer;
 
     // Camera cpture stream object
     cv::VideoCapture cap;
+
+
 
 
 };

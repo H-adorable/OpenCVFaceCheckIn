@@ -48,12 +48,13 @@ void Welcome::showAgain(int)
 void Welcome::on_checkIn_clicked()
 {
     number = ui->lineIn->text();
+    ui->lineIn->clear();
     qDebug() << "get the number:\t" << number;
     if(check.isExist(number)){
         close();
         qDebug() << "Welcome closed.";
         emit confirmed(1, number);
-        qDebug() << "Confirmed signal sent.";
+        qDebug() << "Confirmed signal sent.(welcome)";
     }
     else{
         emit refused(1, number);
@@ -67,4 +68,9 @@ void Welcome::on_checkIn_clicked()
 void Welcome::on_close_clicked()
 {
     close();
+}
+
+void Welcome::on_lineIn_returnPressed()
+{
+    emit ui->checkIn->clicked();
 }

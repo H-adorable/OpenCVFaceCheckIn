@@ -17,8 +17,11 @@ public:
     ~Authentication();
 
 public slots:
-    // Start without argument
-    void start(QString);
+    // Start with argument
+    void start(QString x);
+
+private slots:
+    void on_close_clicked();
 
 private:
     Ui::Authentication *ui;
@@ -28,6 +31,24 @@ private:
 
     // CheckList class containing SQLite methods
     CheckList check;
+
+    // Show the info of those who is authorised
+    bool infoShow();
+
+    // Standard image
+    QImage standardFace;
+
+    // Name
+    QString name;
+
+    // Department
+    QString department;
+
+    // Position
+    QString position;
+
+    // Result
+    QString result;
 };
 
 #endif // AUTHENTICATION_H
