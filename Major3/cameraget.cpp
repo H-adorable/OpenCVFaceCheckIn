@@ -24,9 +24,6 @@ CameraGet::CameraGet(QWidget *parent) :
             this,
             SLOT(match()));
 
-    // First 'tic' face detection do not use.
-    tic = 20;
-
 }
 
 CameraGet::~CameraGet()
@@ -38,23 +35,29 @@ CameraGet::~CameraGet()
 
 void CameraGet::start(int x, QString s)
 {
+    // First 'tic' face detection do not use.
+    tic = 20;
+
     show();
     number = s;
     if(x == 1){
         ui->hint->setText("请面对摄像头并保持严肃");
         cap = cv::VideoCapture(0);
         timer->start(20);
-//        emit camera(1);
+        //        emit camera(1);
     }
-//    ulong n = 25*60*0.02;
-//    for(ulong i=0; i<n; ++i)
+    //    ulong n = 25*60*0.02;
+    //    for(ulong i=0; i<n; ++i)
     //        getCamera(0);
 }
 
 void CameraGet::reShow(int x)
 {
-    if(x == 2)
+    if(x == 2){
         show();
+        // First 'tic' face detection do not use.
+        tic = 20;
+    }
 }
 
 void CameraGet::on_back_clicked()
@@ -91,26 +94,42 @@ void CameraGet::getCamera()
                            QImage::Format_RGB888);
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
-    cv::imshow( "face", faceBuffer );
+    if(!faceBuffer.empty())
+        cv::imshow( "face", faceBuffer );
 
     // If get a face send the signal.
-    if(isFace && (!tic)){
-        if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
-        qDebug() << "getFace signal sent.(cameraGet)";
-        emit getFace(faceBuffer);
+    if(tic == 0){
+        if(isFace){
+            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
+            qDebug() << "getFace signal sent.(cameraGet)";
+            emit getFace(faceBuffer);
+        }
+        else{
+            faceBuffer.release();
+            cap.release();
+            timer->stop();
+            close();
+            qDebug() << "Camera closed.";
+            emit noFace(2, 2, number);
+            qDebug() << "noFace signal sent.(cameraGet)";
+            ui->camBack->clear();
+        }
     }
     else
         --tic;
+    std::cout << tic;
 
-//    QCoreApplication::processEvents();
+    //    QCoreApplication::processEvents();
 }
 
 void CameraGet::match()
 {
     if(face.imgMatch(faceBuffer,
                      check.faceImg(number))){
+        faceBuffer.release();
         cap.release();
         timer->stop();
+        ui->camBack->clear();
         close();
         qDebug() << "Camera closed.";
         emit confirmed(2, number);
@@ -118,8 +137,10 @@ void CameraGet::match()
 
     }
     else{
+        faceBuffer.release();
         cap.release();
         timer->stop();
+        ui->camBack->clear();
         close();
         qDebug() << "Camera closed.";
         emit refused(2, number);

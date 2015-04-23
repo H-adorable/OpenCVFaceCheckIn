@@ -52,6 +52,9 @@ signals:
     // When 1 frame processed
     void camera(int);
 
+    // When no face detected
+    void noFace(int, int, QString);
+
 private slots:
     void on_back_clicked();
 

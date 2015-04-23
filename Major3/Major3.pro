@@ -17,7 +17,6 @@ SOURCES += main.cpp\
     checklist.cpp \
     cameraget.cpp \
     face.cpp \
-    information.cpp \
     authentication.cpp \
     alert.cpp
 
@@ -25,7 +24,6 @@ HEADERS  += welcome.h \
     checklist.h \
     cameraget.h \
     face.h \
-    information.h \
     authentication.h \
     alert.h
 
