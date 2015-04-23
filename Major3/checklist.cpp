@@ -18,7 +18,8 @@ bool CheckList::isExist(QString)
 
 cv::Mat CheckList::faceImg(QString)
 {
-    return cv::Mat();
+    // BGR image
+    return cv::imread("face.bmp");
 
 }
 

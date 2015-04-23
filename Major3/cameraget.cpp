@@ -95,7 +95,7 @@ void CameraGet::getCamera()
 
     // If get a face send the signal.
     if(isFace && (!tic)){
-//        if(cv::imwrite("face.bmp", faceBuffer)) qDebug() << "success";
+        if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
         qDebug() << "getFace signal sent.(cameraGet)";
         emit getFace(faceBuffer);
     }
@@ -123,6 +123,6 @@ void CameraGet::match()
         close();
         qDebug() << "Camera closed.";
         emit refused(2, number);
-        qDebug() << "Confirmed signal sent.(cameraGet)";
+        qDebug() << "Refused signal sent.(cameraGet)";
     }
 }

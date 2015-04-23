@@ -49,3 +49,4 @@ LIBS +=	C:\opencv\2.4.10_in_Qt\lib\libopencv_calib3d2410.dll.a\
         C:\opencv\2.4.10_in_Qt\lib\libopencv_ml2410.dll.a\
         C:\opencv\2.4.10_in_Qt\lib\libopencv_objdetect2410.dll.a\
         C:\opencv\2.4.10_in_Qt\lib\libopencv_video2410.dll.a\
+        C:\opencv\2.4.10_in_Qt\lib\libopencv_nonfree2410.dll.a

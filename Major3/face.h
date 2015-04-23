@@ -36,6 +36,8 @@ public:
 
 private:
     std::string cascadeName;
+    float matchThreshold;
+    float judgeThreshold;
 
     // Detect and draw
     bool detectAndDraw(cv::Mat img,

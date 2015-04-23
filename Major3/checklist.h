@@ -5,7 +5,7 @@
 #include <QImage>
 
 #include <opencv2/core/core.hpp>
-//#include <highgui.h>
+#include <highgui.h>
 #include <nonfree/features2d.hpp>
 //#include <nonfree/nonfree.hpp>
 

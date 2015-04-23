@@ -3,10 +3,14 @@
 using namespace cv;
 using namespace std;
 
+#include <QDebug>
+
 Face::Face()
 {
     // Indecate the path of cascade.
     cascadeName = "D:/github/OpenCVFaceCheckIn/Major3/haarcascades/haarcascade_frontalface_alt.xml";
+    matchThreshold = 220;
+    judgeThreshold = 0.38;
 }
 
 Face::~Face()
@@ -33,22 +37,72 @@ bool Face::detect(cv::Mat input, cv::Mat& cut, cv::Mat draw)
     input.copyTo( frameCopy );
     if(detectAndDraw( frameCopy, cut, cascade, nestedCascade, scale, tryflip )){
         frameCopy.copyTo(draw);
-//        cv::imshow( "result", cut );
+        //        cv::imshow( "result", cut );
 
 
         return true;
     }
     else
         return false;
-//       cvDestroyWindow("result");
+    //       cvDestroyWindow("result");
 
 
 
 }
 
-bool Face::imgMatch(cv::Mat, cv::Mat)
+bool Face::imgMatch(cv::Mat cam, cv::Mat base)
 {
-    return true;
+    if(cam.empty() || base.empty()){
+        qDebug() << "Image erro.";
+        return false;
+    }
+    // turn to grayscale
+    cvtColor(cam, cam, CV_BGR2GRAY);
+    cvtColor(base, base, CV_BGR2GRAY);
+
+
+    // Detect SIFT keypoints
+    SiftDescriptorExtractor detector;
+    vector<KeyPoint> camKey, baseKey;
+
+    detector.detect(cam, camKey);
+    detector.detect(base, baseKey);
+
+    // Extract SIFT descriptor
+    SiftDescriptorExtractor extractor;
+    Mat camDes, baseDes;
+    extractor.compute(cam, camKey, camDes);
+    extractor.compute(base, baseKey, baseDes);
+
+    // Match descriptors
+    BFMatcher matcher(NORM_L2, true);
+    vector< vector<DMatch> > matches;
+    matcher.radiusMatch(baseDes, camDes, matches, matchThreshold);
+
+    // Counting maches = num
+    int num = 0;
+    for(vector< vector<DMatch> >::iterator i = matches.begin();
+        i != matches.end();
+        ++i)
+        if(i->size() != 0)
+            ++num;
+    cout << "match:\t" << num << endl
+         << "key of cam:\t" << camKey.size() << endl
+         << "key of base:\t" << baseKey.size() << endl;
+
+    Mat img_match;
+    drawMatches(base, baseKey, cam, camKey, matches, img_match);//,Scalar::all(-1),Scalar::all(-1),vector<char>(),drawmode);
+    imshow("matches",img_match);
+
+    // Judge
+    if((double)num /*/ int(camKey.size < baseDes.size ? camKey.size : baseDes.size)*/ >= judgeThreshold){
+        return true;
+    }
+    else{
+        return false;
+    }
+
+//    return true;
 
 }
 
@@ -147,6 +201,7 @@ bool Face::detectAndDraw(Mat img, Mat &faceSlice,
             circle( img, center, radius, color, 3, 8, 0 );
         }
     }
-//        cv::imshow( "result", faceSlice );
+    //        cv::imshow( "result", faceSlice );
+    return true;
 }
 
