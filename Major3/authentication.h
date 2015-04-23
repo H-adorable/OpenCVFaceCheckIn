@@ -1,3 +1,7 @@
+/*
+    Dialog No. = 3
+*/
+
 #ifndef AUTHENTICATION_H
 #define AUTHENTICATION_H
 
@@ -18,7 +22,7 @@ public:
 
 public slots:
     // Start with argument
-    void start(QString x);
+    void start(int x, QString n);
 
 private slots:
     void on_close_clicked();

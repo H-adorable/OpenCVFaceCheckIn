@@ -1,3 +1,7 @@
+/*
+    Dialog No. = 1
+*/
+
 #ifndef WELCOME_H
 #define WELCOME_H
 
@@ -19,7 +23,7 @@ public:
 
 public slots:
     // Re-show this welcome window
-    void showAgain(int);
+    void reShow(int);
 
 signals:
     // Number is exist in the system

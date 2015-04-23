@@ -48,7 +48,13 @@ void CameraGet::start(int x, QString s)
     }
 //    ulong n = 25*60*0.02;
 //    for(ulong i=0; i<n; ++i)
-//        getCamera(0);
+    //        getCamera(0);
+}
+
+void CameraGet::reShow(int x)
+{
+    if(x == 2)
+        show();
 }
 
 void CameraGet::on_back_clicked()
@@ -89,7 +95,7 @@ void CameraGet::getCamera()
 
     // If get a face send the signal.
     if(isFace && (!tic)){
-        if(cv::imwrite("face.bmp", faceBuffer)) qDebug() << "success";
+//        if(cv::imwrite("face.bmp", faceBuffer)) qDebug() << "success";
         qDebug() << "getFace signal sent.(cameraGet)";
         emit getFace(faceBuffer);
     }
@@ -107,7 +113,7 @@ void CameraGet::match()
         timer->stop();
         close();
         qDebug() << "Camera closed.";
-        emit confirmed(number);
+        emit confirmed(2, number);
         qDebug() << "Confirmed signal sent.(cameraGet)";
 
     }
@@ -116,7 +122,7 @@ void CameraGet::match()
         timer->stop();
         close();
         qDebug() << "Camera closed.";
-        emit refused(number);
+        emit refused(2, number);
         qDebug() << "Confirmed signal sent.(cameraGet)";
     }
 }

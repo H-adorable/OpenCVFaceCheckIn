@@ -22,11 +22,14 @@ Welcome::~Welcome()
 }
 
 // Show Welcome dialog again
-void Welcome::showAgain(int)
+void Welcome::reShow(int x)
 {   
     // 1 = CameraGet, 2 = Authentication, 3 = Alert
 //    ui->lineIn->setText("请输入编号");
-    show();
+//    show();
+    if(x == 1){
+        show();
+    }
 }
 
 //bool Welcome::eventFilter(QObject *obj, QEvent *event){

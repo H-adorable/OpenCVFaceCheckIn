@@ -1,3 +1,7 @@
+/*
+    Dialog No. = 2
+*/
+
 #ifndef CAMERAGET_H
 #define CAMERAGET_H
 
@@ -29,6 +33,9 @@ public slots:
     // Start with arguments
     void start(int, QString);
 
+    // Re-show the dialog
+    void reShow(int x);
+
 signals:
     // When 'Back' clicked
     void back(int);
@@ -37,10 +44,10 @@ signals:
     void getFace(cv::Mat);
 
     // When face matchs, emit with number
-    void confirmed(QString);
+    void confirmed(int, QString);
 
     // When face matching failed, emit with number
-    void refused(QString);
+    void refused(int, QString);
 
     // When 1 frame processed
     void camera(int);

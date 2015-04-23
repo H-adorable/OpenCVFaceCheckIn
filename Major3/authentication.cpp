@@ -16,9 +16,9 @@ Authentication::~Authentication()
     delete ui;
 }
 
-void Authentication::start(QString x)
+void Authentication::start(int x, QString n)
 {
-    number = x;
+    number = n;
     show();
     if(infoShow())
         emit accepted();

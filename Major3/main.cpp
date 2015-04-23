@@ -20,10 +20,10 @@ int main(int argc, char *argv[])
 
     // Connect welcome and cameraget
     QObject::connect(&w, SIGNAL(confirmed(int, QString)), &c, SLOT(start(int, QString)));
-    QObject::connect(&c, SIGNAL(back(int)), &w, SLOT(showAgain(int)));
+    QObject::connect(&c, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
     // Connect cameraget and authentication
-    QObject::connect(&c, SIGNAL(confirmed(QString)), &au, SLOT(start(QString)));
+    QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
 //    QObject::connect(&a, SIGNAL())
 
     return a.exec();
