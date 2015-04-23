@@ -85,8 +85,11 @@ void CameraGet::getCamera()
                            QImage::Format_RGB888);
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
+    cv::imshow( "face", faceBuffer );
+
     // If get a face send the signal.
     if(isFace && (!tic)){
+        if(cv::imwrite("face.bmp", faceBuffer)) qDebug() << "success";
         qDebug() << "getFace signal sent.(cameraGet)";
         emit getFace(faceBuffer);
     }

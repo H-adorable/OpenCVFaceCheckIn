@@ -14,7 +14,7 @@ Face::~Face()
 
 }
 
-bool Face::detect(cv::Mat input, cv::Mat cut, cv::Mat draw)
+bool Face::detect(cv::Mat input, cv::Mat& cut, cv::Mat draw)
 {
     //    cut = input;
     //    draw = input;
@@ -33,6 +33,8 @@ bool Face::detect(cv::Mat input, cv::Mat cut, cv::Mat draw)
     input.copyTo( frameCopy );
     if(detectAndDraw( frameCopy, cut, cascade, nestedCascade, scale, tryflip )){
         frameCopy.copyTo(draw);
+//        cv::imshow( "result", cut );
+
 
         return true;
     }
@@ -50,7 +52,7 @@ bool Face::imgMatch(cv::Mat, cv::Mat)
 
 }
 
-bool Face::detectAndDraw(Mat img, Mat faceSlice,
+bool Face::detectAndDraw(Mat img, Mat &faceSlice,
                          CascadeClassifier &cascade,
                          CascadeClassifier &nestedCascade,
                          double scale, bool tryflip)
@@ -145,6 +147,6 @@ bool Face::detectAndDraw(Mat img, Mat faceSlice,
             circle( img, center, radius, color, 3, 8, 0 );
         }
     }
-        cv::imshow( "result", faceSlice );
+//        cv::imshow( "result", faceSlice );
 }
 

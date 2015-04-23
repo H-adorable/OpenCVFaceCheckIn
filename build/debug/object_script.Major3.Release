@@ -1,0 +1,12 @@
+INPUT(
+./release\main.o
+./release\welcome.o
+./release\checklist.o
+./release\cameraget.o
+./release\face.o
+./release\information.o
+./release\authentication.o
+./release\moc_welcome.o
+./release\moc_cameraget.o
+./release\moc_authentication.o
+);
