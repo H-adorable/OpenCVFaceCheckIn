@@ -18,22 +18,27 @@ Authentication::~Authentication()
 
 void Authentication::start(int x, QString n)
 {
-    number = n;
+    number = "10";
     show();
-    if(infoShow())
-        emit accepted();
-    else
+    if(check.search(number,
+                    standardFace,
+                    name,
+                    department,
+                    position)){
+//        emit accepted();
+        infoShow();
+    }
+    else{
+        qDebug() << "reject";
+        ui->result->setText("Rejection");
         emit rejected();
+    }
 }
 
 bool Authentication::infoShow()
 {
     // Search the database for detail information
-    if(check.search(number,
-                 standardFace,
-                 name,
-                 department,
-                 position)){
+
         result = "Admission";
         // Show the information
         ui->result->setText(result);
@@ -41,12 +46,11 @@ bool Authentication::infoShow()
         ui->department->setText(department);
         ui->position->setText(position);
         return true;
-    }
-    else{
-        result = "Rejection";
-        ui->result->setText(result);
-        return false;
-    };
+
+//        result = "Rejection";
+//        ui->result->setText(result);
+//        return false;
+//    };
 
 }
 
