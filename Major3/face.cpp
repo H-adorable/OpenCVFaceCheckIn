@@ -10,7 +10,7 @@ Face::Face()
     // Indecate the path of cascade.
     cascadeName = "D:/github/OpenCVFaceCheckIn/Major3/haarcascades/haarcascade_frontalface_alt.xml";
     matchThreshold = 220;
-    judgeThreshold = 0.38;
+    judgeThreshold = 0.1;
 }
 
 Face::~Face()
@@ -95,7 +95,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
     imshow("matches",img_match);
 
     // Judge
-    if((double)num /*/ int(camKey.size < baseDes.size ? camKey.size : baseDes.size)*/ >= judgeThreshold){
+    if((double)num / int(camKey.size() < baseKey.size() ? camKey.size() : baseKey.size()) >= judgeThreshold){
         return true;
     }
     else{
