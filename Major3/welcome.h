@@ -42,6 +42,8 @@ private slots:
 
     void on_lineIn_returnPressed();
 
+    void on_administer_clicked();
+
 private:
     Ui::Welcome *ui;
 

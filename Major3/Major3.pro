@@ -18,19 +18,22 @@ SOURCES += main.cpp\
     cameraget.cpp \
     face.cpp \
     authentication.cpp \
-    alert.cpp
+    alert.cpp \
+    admincheck.cpp
 
 HEADERS  += welcome.h \
     checklist.h \
     cameraget.h \
     face.h \
     authentication.h \
-    alert.h
+    alert.h \
+    admincheck.h
 
 FORMS    += welcome.ui \
     cameraget.ui \
     authentication.ui \
-    alert.ui
+    alert.ui \
+    admincheck.ui
 
 QT       += core
 

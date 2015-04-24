@@ -2,6 +2,7 @@
 #include "cameraget.h"
 #include "authentication.h"
 #include "alert.h"
+#include "admincheck.h"
 
 #include <QApplication>
 
@@ -13,6 +14,7 @@ int main(int argc, char *argv[])
     CameraGet c;
     Authentication au;
     Alert al;
+    AdminCheck ac;
 
     w.setWindowFlags(Qt::FramelessWindowHint);
 //    c.setWindowFlags(Qt::FramelessWindowHint);
@@ -33,6 +35,10 @@ int main(int argc, char *argv[])
 
     // Connect cameraget and alert
     QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
+
+    // Connect welcome and admincheck
+    QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));
+    QObject::connect(&ac, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
     return a.exec();
 }

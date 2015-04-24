@@ -10,8 +10,8 @@ Welcome::Welcome(QWidget *parent) :
     ui->setupUi(this);
 
     // Install the Event Filter on Line editor 'lineIn'
-    ui->lineIn->installEventFilter(ui->lineIn);
-    ui->lineIn->setPlaceholderText("请输入编号");
+//    ui->lineIn->installEventFilter(ui->lineIn);
+//    ui->lineIn->setPlaceholderText("请输入编号");
     qDebug() << "Welcome born.";
 }
 
@@ -76,4 +76,10 @@ void Welcome::on_close_clicked()
 void Welcome::on_lineIn_returnPressed()
 {
     emit ui->checkIn->clicked();
+}
+
+void Welcome::on_administer_clicked()
+{
+    emit administor(5);
+    close();
 }

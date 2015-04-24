@@ -83,6 +83,9 @@
    <property name="frame">
     <bool>true</bool>
    </property>
+   <property name="placeholderText">
+    <string>请输入编号</string>
+   </property>
   </widget>
   <widget class="QPushButton" name="checkIn">
    <property name="geometry">
