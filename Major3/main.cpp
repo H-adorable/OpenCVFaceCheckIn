@@ -33,8 +33,10 @@ int main(int argc, char *argv[])
     QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
 //    QObject::connect(&a, SIGNAL())
 
-    // Connect cameraget and alert
+    // Connect everything and alert
     QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
+    QObject::connect(&c, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
+    QObject::connect(&ac, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
 
     // Connect welcome and admincheck
     QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));

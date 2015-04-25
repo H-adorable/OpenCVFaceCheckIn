@@ -1,6 +1,8 @@
 #include "admincheck.h"
 #include "ui_admincheck.h"
 
+#include <QDebug>
+
 AdminCheck::AdminCheck(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::AdminCheck)
@@ -32,11 +34,14 @@ void AdminCheck::on_password_returnPressed()
 
 void AdminCheck::on_ok_clicked()
 {
-    if(ui->ok->text() == password){
+//    qDebug() << ui->password->text();
+
+    if(ui->password->text() == password){
         emit confirmed(5, "");
         close();
     }
     else{
+        qDebug() << "Administor check failed.";
         emit refused(5, 0, "");
         close();
     }

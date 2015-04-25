@@ -36,6 +36,9 @@ public slots:
     // Re-show the dialog
     void reShow(int x);
 
+    // Record client's face
+    void recordClient();
+
 signals:
     // When 'Back' clicked
     void back(int);
@@ -47,7 +50,7 @@ signals:
     void confirmed(int, QString);
 
     // When face matching failed, emit with number
-    void refused(int, QString);
+    void refused(int, int, QString);
 
     // When 1 frame processed
     void camera(int);

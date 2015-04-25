@@ -60,6 +60,35 @@ void CameraGet::reShow(int x)
     }
 }
 
+void CameraGet::recordClient()
+{
+    // Convert number to 'string'
+    std::string s = number.toStdString();
+    bool isFace;
+    // Get image
+    cap >> cameraBuffer;
+
+    // Detect wheather face exists
+    isFace = face.detect(cameraBuffer,
+                         faceBuffer,
+                         cameraBuffer);
+
+    // Show the camera feedback first
+    cv::cvtColor(cameraBuffer, colorBuffer, CV_BGR2RGB);
+    displayBuffer = QImage((const uchar*)(colorBuffer.data),
+                           colorBuffer.cols,
+                           colorBuffer.rows,
+                           QImage::Format_RGB888);
+    ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
+
+    --tic;
+    if(tic == 0){
+        cv::imwrite(s+"face.jpg", faceBuffer);
+    }
+
+
+}
+
 void CameraGet::on_back_clicked()
 {
     timer->stop();
@@ -100,7 +129,7 @@ void CameraGet::getCamera()
     // If get a face send the signal.
     if(tic == 0){
         if(isFace){
-            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
+//            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
             qDebug() << "getFace signal sent.(cameraGet)";
             emit getFace(faceBuffer);
         }
@@ -115,8 +144,11 @@ void CameraGet::getCamera()
             ui->camBack->clear();
         }
     }
-    else
+    else{
         --tic;
+//        if(tic < 15)
+//            emit getFace(faceBuffer);
+    }
     std::cout << tic;
 
     //    QCoreApplication::processEvents();
@@ -143,7 +175,7 @@ void CameraGet::match()
         ui->camBack->clear();
         close();
         qDebug() << "Camera closed.";
-        emit refused(2, number);
+        emit refused(2, 1, number);
         qDebug() << "Refused signal sent.(cameraGet)";
     }
 }
