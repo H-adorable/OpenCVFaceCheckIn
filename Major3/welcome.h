@@ -7,7 +7,8 @@
 
 #include <QWidget>
 
-#include "checklist.h"
+#include "sqlitetool.h"
+//#include "environment.h"
 
 namespace Ui {
 class Welcome;
@@ -51,7 +52,7 @@ private:
     QString number;
 
     // CheckList class containing SQLite methods
-    CheckList check;
+    SQLiteTool check;
 
     // Event Filter
 //    bool eventFilter(QObject *, QEvent *);

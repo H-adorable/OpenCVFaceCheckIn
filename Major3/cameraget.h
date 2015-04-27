@@ -12,7 +12,9 @@
 #include <imgproc/imgproc.hpp>
 
 #include "face.h"
-#include "checklist.h"
+#include "sqlitetool.h"
+
+#include "environment.h"
 
 namespace Ui {
 class CameraGet;
@@ -91,7 +93,7 @@ private:
     Face face;
 
     // Database checking related algorithm
-    CheckList check;
+    SQLiteTool check;
 
     // Face image
     cv::Mat faceBuffer;

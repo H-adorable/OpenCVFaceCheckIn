@@ -6,7 +6,8 @@
 #define AUTHENTICATION_H
 
 #include <QDialog>
-#include "checklist.h"
+#include "sqlitetool.h"
+//#include "environment.h"
 
 namespace Ui {
 class Authentication;
@@ -34,7 +35,7 @@ private:
     QString number;
 
     // CheckList class containing SQLite methods
-    CheckList check;
+    SQLiteTool check;
 
     // Show the info of those who is authorised
     bool infoShow();

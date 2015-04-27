@@ -14,20 +14,21 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         welcome.cpp \
-    checklist.cpp \
     cameraget.cpp \
     face.cpp \
     authentication.cpp \
     alert.cpp \
-    admincheck.cpp
+    admincheck.cpp \
+    sqlitetool.cpp
 
 HEADERS  += welcome.h \
-    checklist.h \
     cameraget.h \
     face.h \
     authentication.h \
     alert.h \
-    admincheck.h
+    admincheck.h \
+    sqlitetool.h \
+    environment.h
 
 FORMS    += welcome.ui \
     cameraget.ui \
@@ -35,7 +36,8 @@ FORMS    += welcome.ui \
     alert.ui \
     admincheck.ui
 
-QT       += core
+QT       += core \
+            sql
 
 INCLUDEPATH +=	C:\opencv\2.4.10_in_Qt\install\include\opencv\
                 C:\opencv\2.4.10_in_Qt\install\include\opencv2\

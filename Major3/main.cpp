@@ -8,7 +8,13 @@
 
 int main(int argc, char *argv[])
 {     
+
     QApplication a(argc, argv);
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("first.db");
+    std::cout << "dddddd" << std::endl;
+    db.close();
 
     Welcome w;
     CameraGet c;
@@ -17,7 +23,7 @@ int main(int argc, char *argv[])
     AdminCheck ac;
 
     w.setWindowFlags(Qt::FramelessWindowHint);
-//    c.setWindowFlags(Qt::FramelessWindowHint);
+    //    c.setWindowFlags(Qt::FramelessWindowHint);
     au.setWindowFlags(Qt::FramelessWindowHint);
 
     w.show();
@@ -31,7 +37,7 @@ int main(int argc, char *argv[])
 
     // Connect cameraget and authentication
     QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
-//    QObject::connect(&a, SIGNAL())
+    //    QObject::connect(&a, SIGNAL())
 
     // Connect everything and alert
     QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));

@@ -6,8 +6,11 @@
 CameraGet::CameraGet(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraGet)
+//    check(databaseLocation)
 {
     ui->setupUi(this);
+
+//    check("./data/first.db");
 
     // Timer to control the rate of camera capture (?)
     timer = new QTimer(this);
@@ -156,8 +159,9 @@ void CameraGet::getCamera()
 
 void CameraGet::match()
 {
+    cv::Mat base = cv::imread(check.faceImg(number));
     if(face.imgMatch(faceBuffer,
-                     check.faceImg(number))){
+                     base)){
         faceBuffer.release();
         cap.release();
         timer->stop();

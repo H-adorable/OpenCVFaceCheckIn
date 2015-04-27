@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <QString>
 
+#include "environment.h"
+
 namespace Ui {
 class AdminCheck;
 }

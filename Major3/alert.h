@@ -5,6 +5,8 @@
 #include <string>
 #include <iostream>
 
+#include "environment.h"
+
 namespace Ui {
 class Alert;
 }

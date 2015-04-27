@@ -9,9 +9,13 @@ Welcome::Welcome(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    // Initialize 'check with database location;
+//    check(databaseLocation);
+
+
     // Install the Event Filter on Line editor 'lineIn'
-//    ui->lineIn->installEventFilter(ui->lineIn);
-//    ui->lineIn->setPlaceholderText("请输入编号");
+    //    ui->lineIn->installEventFilter(ui->lineIn);
+    //    ui->lineIn->setPlaceholderText("请输入编号");
     qDebug() << "Welcome born.";
 }
 
@@ -25,8 +29,8 @@ Welcome::~Welcome()
 void Welcome::reShow(int x)
 {   
     // 1 = CameraGet, 2 = Authentication, 3 = Alert
-//    ui->lineIn->setText("请输入编号");
-//    show();
+    //    ui->lineIn->setText("请输入编号");
+    //    show();
     if(x == 1){
         show();
     }
