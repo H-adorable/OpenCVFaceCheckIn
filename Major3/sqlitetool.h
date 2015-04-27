@@ -53,6 +53,9 @@ private:
     // When a method is complete, 'leave()' should be called
     bool leave();
 
+    // When a method begins, 'begin()' should be called
+    bool begin();
+
 };
 
 #endif // SQLITETOOL_H

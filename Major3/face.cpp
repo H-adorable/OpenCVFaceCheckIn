@@ -9,7 +9,7 @@ Face::Face()
 {
     // Indecate the path of cascade.
     cascadeName = "D:/github/OpenCVFaceCheckIn/Major3/haarcascades/haarcascade_frontalface_alt.xml";
-    matchThreshold = 220;
+    matchThreshold = 160;
     judgeThreshold = 0.1;
 }
 
@@ -56,9 +56,12 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
         qDebug() << "Image erro.";
         return false;
     }
+
     // turn to grayscale
-    cvtColor(cam, cam, CV_BGR2GRAY);
-    cvtColor(base, base, CV_BGR2GRAY);
+    if(cam.channels() != 1)
+        cvtColor(cam, cam, CV_BGR2GRAY);
+    if(base.channels() != 1)
+        cvtColor(base, base, CV_BGR2GRAY);
 
 
     // Detect SIFT keypoints
@@ -88,7 +91,8 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
             ++num;
     cout << "match:\t" << num << endl
          << "key of cam:\t" << camKey.size() << endl
-         << "key of base:\t" << baseKey.size() << endl;
+         << "key of base:\t" << baseKey.size() << endl
+         << "correct rate:\t" << (double)num / int(camKey.size() < baseKey.size() ? camKey.size() : baseKey.size())<< endl;
 
     Mat img_match;
     drawMatches(base, baseKey, cam, camKey, matches, img_match);//,Scalar::all(-1),Scalar::all(-1),vector<char>(),drawmode);

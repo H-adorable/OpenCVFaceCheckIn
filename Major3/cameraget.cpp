@@ -113,6 +113,16 @@ void CameraGet::getCamera()
     // Get image
     cap >> cameraBuffer;
 
+    cv::Mat grayFace;
+    cv::Mat litghtBuffer;
+
+//    cv::cvtColor(cameraBuffer, grayCamera, CV_BGR2GRAY);
+
+//    // Do histogram equalization to decrease the infulence of light
+//    cv::equalizeHist(grayCamera, litghtBuffer);
+
+//    cv::imshow("dd", litghtBuffer);
+
     // Detect wheather face exists
     isFace = face.detect(cameraBuffer,
                          faceBuffer,
@@ -132,6 +142,11 @@ void CameraGet::getCamera()
     // If get a face send the signal.
     if(tic == 0){
         if(isFace){
+            // Do histogram equalization to decrease the infulence of light
+            cv::cvtColor( faceBuffer, grayFace, CV_BGR2GRAY );
+            cv::resize( grayFace, faceBuffer, faceBuffer.size(), 0, 0, cv::INTER_LINEAR );
+            cv::equalizeHist( faceBuffer, faceBuffer );
+
 //            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
             qDebug() << "getFace signal sent.(cameraGet)";
             emit getFace(faceBuffer);
