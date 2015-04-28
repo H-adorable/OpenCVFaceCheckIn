@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     alert.cpp \
     admincheck.cpp \
     sqlitetool.cpp \
-    administor.cpp
+    administor.cpp \
+    showfaces.cpp
 
 HEADERS  += welcome.h \
     cameraget.h \
@@ -30,14 +31,16 @@ HEADERS  += welcome.h \
     admincheck.h \
     sqlitetool.h \
     environment.h \
-    administor.h
+    administor.h \
+    showfaces.h
 
 FORMS    += welcome.ui \
     cameraget.ui \
     authentication.ui \
     alert.ui \
     admincheck.ui \
-    administor.ui
+    administor.ui \
+    showfaces.ui
 
 QT       += core \
             sql
