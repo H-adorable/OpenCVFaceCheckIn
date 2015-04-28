@@ -10,11 +10,14 @@
 #include <core/core.hpp>
 #include <highgui/highgui.hpp>
 #include <imgproc/imgproc.hpp>
+#include <string>
 
 #include "face.h"
 #include "sqlitetool.h"
 
 #include "environment.h"
+
+using namespace std;
 
 namespace Ui {
 class CameraGet;
@@ -38,9 +41,6 @@ public slots:
     // Re-show the dialog
     void reShow(int x);
 
-    // Record client's face
-    void recordClient();
-
 signals:
     // When 'Back' clicked
     void back(int);
@@ -60,6 +60,9 @@ signals:
     // When no face detected
     void noFace(int, int, QString);
 
+    // When get 10 faces
+    void showFaces();
+
 private slots:
     void on_back_clicked();
 
@@ -71,6 +74,9 @@ private slots:
     // process the match
     void match();
 
+    // Record client's face
+    void recordClient();
+
 private:
     Ui::CameraGet *ui;
 
@@ -78,7 +84,8 @@ private:
     QString number;
 
     // Help to get & show the image
-    QTimer *timer;
+    QTimer *timer1;
+    QTimer *timer2;
 
     // Camera Buffer
     cv::Mat cameraBuffer;
@@ -104,7 +111,11 @@ private:
     // First 'tic' face detection do not use.
     int tic;
 
+    // Match or catch
+    int state;
 
+    // The number of faces camera gets
+    int nFaces;
 
 
 

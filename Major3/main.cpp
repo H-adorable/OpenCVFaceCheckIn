@@ -3,6 +3,7 @@
 #include "authentication.h"
 #include "alert.h"
 #include "admincheck.h"
+#include "administor.h"
 #include "sqlitetool.h"
 
 #include <QApplication>
@@ -13,7 +14,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     SQLiteTool sq;
-    sq.initial();
+    if(sq.initial())
+        std::cout << "Initialization done."<< endl;
 //    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
 //    db.setDatabaseName("../data/first.db");
 //    if(db.open())
@@ -25,6 +27,7 @@ int main(int argc, char *argv[])
     Authentication au;
     Alert al;
     AdminCheck ac;
+    Administor ad;
 
     w.setWindowFlags(Qt::FramelessWindowHint);
     //    c.setWindowFlags(Qt::FramelessWindowHint);
@@ -51,6 +54,13 @@ int main(int argc, char *argv[])
     // Connect welcome and admincheck
     QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));
     QObject::connect(&ac, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+
+    // Connect admincheck and administor
+    QObject::connect(&ac, SIGNAL(confirmed(int,QString)), &ad, SLOT(start(int,QString)));
+
+    // Connect administor and cameraget
+    QObject::connect(&ad, SIGNAL(catchFace(int,QString)), &c, SLOT(start(int,QString)));
+
 
     return a.exec();
 }

@@ -50,8 +50,8 @@ public:
     bool initial();
 
 private:
-    // Database connection
-    QSqlDatabase clients;
+//    // Database connection
+//    QSqlDatabase clients;
 
     // When a method is complete, 'leave()' should be called
     bool leave();

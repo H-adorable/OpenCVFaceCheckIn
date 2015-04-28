@@ -6,6 +6,7 @@
 #define WELCOME_H
 
 #include <QWidget>
+#include <QMessageBox>
 
 #include "sqlitetool.h"
 //#include "environment.h"

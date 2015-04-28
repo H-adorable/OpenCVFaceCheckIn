@@ -16,9 +16,10 @@ Authentication::~Authentication()
     delete ui;
 }
 
+
 void Authentication::start(int x, QString n)
 {
-    number = "10";
+    number = n;
     show();
     if(check.search(number,
                     standardFace,

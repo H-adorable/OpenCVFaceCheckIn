@@ -13,6 +13,18 @@ Administor::~Administor()
     delete ui;
 }
 
+void Administor::start(int, QString)
+{
+    show();
+}
+
+void Administor::reShow(int)
+{
+    ui->hint->clear();
+    show();
+
+}
+
 void Administor::on_ok_clicked()
 {
     id = ui->id->text();
@@ -23,10 +35,29 @@ void Administor::on_ok_clicked()
     if(check.isExist(id))
         ui->hint->setText("已存在，添加失败");
     else{
-        if(check.addRow(id, name, department, position))
-            ui->hint->setText("添加成功");
+        if(check.addRow(id, name, department, position)){
+            QString hintText = "编号\t姓名\t部门\t职位\n"
+                    + id + "\t" + name + "\t" + department + "\t" + position + "\n添加成功";
+            ui->hint->setText(hintText);
+            emit catchFace(6, id);
+            close();
+        }
         else
             ui->hint->setText("添加失败");
+        ui->id->clear();
+        ui->name->clear();
+        ui->department->clear();
+        ui->position->clear();
     }
 
+}
+
+void Administor::on_pushButton_2_clicked()
+{
+    close();
+}
+
+void Administor::on_back_clicked()
+{
+    emit back(1);
 }

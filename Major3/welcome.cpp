@@ -64,10 +64,14 @@ void Welcome::on_checkIn_clicked()
         qDebug() << "Confirmed signal sent.(welcome)";
     }
     else{
-        emit refused(1, number);
-        qDebug() << "Refused signal sent.";
-        close();
-        qDebug() << "Welcome closed.";
+        QMessageBox::information(this,
+                                 "提示",
+                                 "该编号不存在！",
+                                 QMessageBox::Ok);
+//        emit refused(1, number);
+//        qDebug() << "Refused signal sent.";
+//        close();
+//        qDebug() << "Welcome closed.";
 
     }
 }
