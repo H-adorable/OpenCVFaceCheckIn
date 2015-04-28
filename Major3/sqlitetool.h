@@ -11,7 +11,7 @@
 //#include <nonfree/nonfree.hpp>
 //#include "environment.h"
 
-const QString databaseLocation = "./data/first.db";
+const QString databaseLocation = "../data/first.db";
 
 
 class SQLiteTool
@@ -21,7 +21,7 @@ public:
     ~SQLiteTool();
 
     // True if number exist
-    bool isExist(QString);
+    bool isExist(QString x);
 
     // Return stored face image location
     std::string faceImg(QString);
@@ -45,6 +45,9 @@ public:
 
     // Update a row
     bool updateRow(/*input*/ QString n, QString name, QString department, QString positon);
+
+    // Initialize, if there is no database, then build one
+    bool initial();
 
 private:
     // Database connection

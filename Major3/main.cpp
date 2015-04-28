@@ -3,6 +3,7 @@
 #include "authentication.h"
 #include "alert.h"
 #include "admincheck.h"
+#include "sqlitetool.h"
 
 #include <QApplication>
 
@@ -11,10 +12,13 @@ int main(int argc, char *argv[])
 
     QApplication a(argc, argv);
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("first.db");
-    std::cout << "dddddd" << std::endl;
-    db.close();
+    SQLiteTool sq;
+    sq.initial();
+//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+//    db.setDatabaseName("../data/first.db");
+//    if(db.open())
+//        std::cout << "dddddd" << std::endl;
+//    db.close();
 
     Welcome w;
     CameraGet c;

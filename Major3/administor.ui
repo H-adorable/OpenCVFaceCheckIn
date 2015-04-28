@@ -280,18 +280,6 @@
       <string/>
      </property>
     </widget>
-    <zorder>name_5</zorder>
-    <zorder>department_5</zorder>
-    <zorder>id_5</zorder>
-    <zorder>position_5</zorder>
-    <zorder>id_2</zorder>
-    <zorder>check</zorder>
-    <zorder>label_2</zorder>
-    <zorder>label_3</zorder>
-    <zorder>label_4</zorder>
-    <zorder>name_2</zorder>
-    <zorder>department_2</zorder>
-    <zorder>position_2</zorder>
    </widget>
    <widget class="QWidget" name="update">
     <attribute name="title">
@@ -530,7 +518,7 @@
     </widget>
    </widget>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="hint">
    <property name="geometry">
     <rect>
      <x>40</x>

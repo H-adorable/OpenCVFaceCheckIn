@@ -14,14 +14,22 @@ SQLiteTool::~SQLiteTool()
 
 }
 
-bool SQLiteTool::isExist(QString)
+bool SQLiteTool::isExist(QString x)
 {
     // Set the connection of database
     begin();
+    QSqlQuery query(clients);
+    query.exec("SELECT id, name FROM client WHERE id == "+ x);
 
+    bool flag = query.first();
     leave();
-    return true;
 
+    if(flag){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 std::string SQLiteTool::faceImg(QString)
@@ -52,15 +60,56 @@ bool SQLiteTool::search(QString n, QImage &img, QString &name, QString &departme
 
 }
 
+bool SQLiteTool::addRow(QString n, QString name, QString department, QString positon)
+{
+    begin();
+    QSqlQuery query;
+    query.prepare("INSERT INTO client (id, name, department, position)"
+                  "VALUES (:id, :name, :department, :position)");
+    query.bindValue(":id", n);
+    query.bindValue(":name", name);
+    query.bindValue(":department", department);
+    query.bindValue(":position", positon);
+    if(!query.exec()){
+        leave();
+        return false;
+    }
+    if(isExist(n)){
+        leave();
+        return true;
+    }
+    else{
+        leave();
+        return false;
+    }
+}
+
+bool SQLiteTool::initial()
+{
+    if(begin()){
+        leave();
+        return true;
+    }
+    else{
+        leave();
+        return false;
+    }
+}
+
 bool SQLiteTool::leave()
 {
+    //    delete clients;
     clients.close();
+    if(clients.isOpen())
+        qDebug() << clients.connectionNames();
+    qDebug() << "free database";
     return true;
 }
 
 bool SQLiteTool::begin()
 {
-    clients = QSqlDatabase::addDatabase("QSQLITE");
+    clients.close();
+    clients = QSqlDatabase::addDatabase("QSQLITE", "FaceRec");
     clients.setDatabaseName(databaseLocation);
     if(!clients.open()){
         qDebug() << "Opening database" << databaseLocation << " failed.";
