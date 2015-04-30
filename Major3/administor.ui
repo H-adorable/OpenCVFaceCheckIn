@@ -47,7 +47,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="add">
     <attribute name="title">
@@ -592,6 +592,30 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>tabWidget</tabstop>
+  <tabstop>id</tabstop>
+  <tabstop>name</tabstop>
+  <tabstop>department</tabstop>
+  <tabstop>position</tabstop>
+  <tabstop>ok</tabstop>
+  <tabstop>id_2</tabstop>
+  <tabstop>check</tabstop>
+  <tabstop>id_3</tabstop>
+  <tabstop>check_2</tabstop>
+  <tabstop>name_3</tabstop>
+  <tabstop>department_3</tabstop>
+  <tabstop>position_3</tabstop>
+  <tabstop>ok_3</tabstop>
+  <tabstop>id_4</tabstop>
+  <tabstop>check_3</tabstop>
+  <tabstop>name_4</tabstop>
+  <tabstop>department_4</tabstop>
+  <tabstop>position_4</tabstop>
+  <tabstop>ok_4</tabstop>
+  <tabstop>back</tabstop>
+  <tabstop>pushButton_2</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

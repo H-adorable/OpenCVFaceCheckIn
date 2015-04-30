@@ -12,3 +12,12 @@ ShowFaces::~ShowFaces()
 {
     delete ui;
 }
+
+void ShowFaces::start(int, QString)
+{
+    QImage b;
+    b.load("temp_1.jpg");
+//    ui->p1->setPixmap(QPixmap::fromImage(displayBuffer));
+    show();
+//    close();
+}

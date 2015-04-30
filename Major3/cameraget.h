@@ -61,7 +61,7 @@ signals:
     void noFace(int, int, QString);
 
     // When get 10 faces
-    void showFaces();
+    void showFaces(int, QString);
 
 private slots:
     void on_back_clicked();

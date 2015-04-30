@@ -5,6 +5,7 @@
 #include "admincheck.h"
 #include "administor.h"
 #include "sqlitetool.h"
+#include "showfaces.h"
 
 #include <QApplication>
 
@@ -16,50 +17,53 @@ int main(int argc, char *argv[])
     SQLiteTool sq;
     if(sq.initial())
         std::cout << "Initialization done."<< endl;
-//    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-//    db.setDatabaseName("../data/first.db");
-//    if(db.open())
-//        std::cout << "dddddd" << std::endl;
-//    db.close();
 
-    Welcome w;
-    CameraGet c;
-    Authentication au;
-    Alert al;
-    AdminCheck ac;
-    Administor ad;
+    ShowFaces s;
+    s.show();
 
-    w.setWindowFlags(Qt::FramelessWindowHint);
-    //    c.setWindowFlags(Qt::FramelessWindowHint);
-    au.setWindowFlags(Qt::FramelessWindowHint);
 
-    w.show();
+//    Welcome w;
+//    CameraGet c;
+//    Authentication au;
+//    Alert al;
+//    AdminCheck ac;
+//    Administor ad;
+//    ShowFaces s;
 
-    // Alert back to welcome all the time
-    QObject::connect(&al, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+//    w.setWindowFlags(Qt::FramelessWindowHint);
+//    //    c.setWindowFlags(Qt::FramelessWindowHint);
+//    au.setWindowFlags(Qt::FramelessWindowHint);
 
-    // Connect welcome and cameraget
-    QObject::connect(&w, SIGNAL(confirmed(int, QString)), &c, SLOT(start(int, QString)));
-    QObject::connect(&c, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+//    //    w.show();
 
-    // Connect cameraget and authentication
-    QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
-    //    QObject::connect(&a, SIGNAL())
+//    // Alert back to welcome all the time
+//    QObject::connect(&al, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
-    // Connect everything and alert
-    QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
-    QObject::connect(&c, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
-    QObject::connect(&ac, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    // Connect welcome and cameraget
+//    QObject::connect(&w, SIGNAL(confirmed(int, QString)), &c, SLOT(start(int, QString)));
+//    QObject::connect(&c, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
-    // Connect welcome and admincheck
-    QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));
-    QObject::connect(&ac, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+//    // Connect cameraget and authentication
+//    QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
+//    //    QObject::connect(&a, SIGNAL())
 
-    // Connect admincheck and administor
-    QObject::connect(&ac, SIGNAL(confirmed(int,QString)), &ad, SLOT(start(int,QString)));
+//    // Connect everything and alert
+//    QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    QObject::connect(&c, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    QObject::connect(&ac, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
 
-    // Connect administor and cameraget
-    QObject::connect(&ad, SIGNAL(catchFace(int,QString)), &c, SLOT(start(int,QString)));
+//    // Connect welcome and admincheck
+//    QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));
+//    QObject::connect(&ac, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+
+//    // Connect admincheck and administor
+//    QObject::connect(&ac, SIGNAL(confirmed(int,QString)), &ad, SLOT(start(int,QString)));
+
+//    // Connect administor and cameraget
+//    QObject::connect(&ad, SIGNAL(catchFace(int,QString)), &c, SLOT(start(int,QString)));
+
+//    // Connect cameraget and showfaces
+//    QObject::connect(&c, SIGNAL(showFaces(int, QString)), &s, SLOT(start(int,QString)));
 
 
     return a.exec();

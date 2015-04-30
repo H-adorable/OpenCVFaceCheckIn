@@ -60,7 +60,7 @@ void CameraGet::start(int x, QString s)
     }
     else if(state == 6){
         // First 'tic' face detection do not use.
-        tic = 50;
+        tic = 100;
         // Initial nFaces
         nFaces = 1;
 
@@ -87,10 +87,10 @@ void CameraGet::reShow(int x)
 void CameraGet::recordClient()
 {
     // Convert number to 'string'
-//    std::string s = number.toStdString();
+    //    std::string s = number.toStdString();
     bool isFace;
     // 'n' faces stored
-    int n = 20;
+    int n = 50;
     // Get image
     cap >> cameraBuffer;
 
@@ -107,10 +107,10 @@ void CameraGet::recordClient()
                            QImage::Format_RGB888);
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
-//    --tic;
-//    if(tic == 0){
-//        cv::imwrite(s+"face.jpg", faceBuffer);
-//    }
+    //    --tic;
+    //    if(tic == 0){
+    //        cv::imwrite(s+"face.jpg", faceBuffer);
+    //    }
 
     if(isFace && tic != 0 && nFaces <= n){
         std::string fileName = "temp_" + (QString::number(nFaces)).toStdString() + ".jpg";
@@ -121,9 +121,9 @@ void CameraGet::recordClient()
     else if(tic == 0 || nFaces > n){
         faceBuffer.release();
         cap.release();
-        timer1->stop();
+        timer2->stop();
         close();
-        emit showFaces();
+        emit showFaces(2, number);
     }
     else{
         --tic;
@@ -133,7 +133,10 @@ void CameraGet::recordClient()
 
 void CameraGet::on_back_clicked()
 {
-    timer1->stop();
+    if(timer2->isActive())
+        timer2->stop();
+    if(timer1->isActive())
+        timer1->stop();
     cap.release();
     close();
     qDebug() << "Camera closed. Back sent";

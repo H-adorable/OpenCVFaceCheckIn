@@ -110,6 +110,12 @@
    </property>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>password</tabstop>
+  <tabstop>ok</tabstop>
+  <tabstop>back</tabstop>
+  <tabstop>close</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

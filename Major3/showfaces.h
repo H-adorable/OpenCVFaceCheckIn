@@ -2,6 +2,7 @@
 #define SHOWFACES_H
 
 #include <QDialog>
+#include <QImage>
 
 namespace Ui {
 class ShowFaces;
