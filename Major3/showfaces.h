@@ -33,6 +33,15 @@ private slots:
 
     void on_close_clicked();
 
+    void on_fomer_clicked();
+
+    void on_latter_clicked();
+
+    void on_back_clicked();
+
+signals:
+    void back(int n);
+
 private:
     Ui::ShowFaces *ui;
 
@@ -46,6 +55,12 @@ private:
 
     // client's id
     QString id;
+
+    // Array of image lable, pic[0] = NULL
+    QLabel* pic[5];
+
+    // Delete other temp Images;
+    bool clearTemps();
 };
 
 #endif // SHOWFACES_H

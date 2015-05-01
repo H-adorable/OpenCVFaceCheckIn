@@ -67,7 +67,7 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton">
+      <widget class="QPushButton" name="ok_1">
        <property name="text">
         <string>1</string>
        </property>
@@ -104,7 +104,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frame_3">
+   <widget class="QFrame" name="frame_4">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -134,7 +134,7 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_4">
+      <widget class="QPushButton" name="ok_4">
        <property name="text">
         <string>4</string>
        </property>
@@ -171,7 +171,7 @@
      </item>
     </layout>
    </widget>
-   <widget class="QFrame" name="frame_4">
+   <widget class="QFrame" name="frame_3">
     <property name="geometry">
      <rect>
       <x>310</x>
@@ -201,7 +201,7 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_6">
+      <widget class="QPushButton" name="ok_3">
        <property name="text">
         <string>3</string>
        </property>
@@ -221,7 +221,7 @@
       </spacer>
      </item>
      <item row="0" column="0" colspan="3">
-      <widget class="QLabel" name="p_6">
+      <widget class="QLabel" name="p_3">
        <property name="frameShape">
         <enum>QFrame::Box</enum>
        </property>
@@ -268,7 +268,7 @@
       </spacer>
      </item>
      <item row="1" column="1">
-      <widget class="QPushButton" name="pushButton_3">
+      <widget class="QPushButton" name="ok_2">
        <property name="text">
         <string>2</string>
        </property>
@@ -288,7 +288,7 @@
       </spacer>
      </item>
      <item row="0" column="0" colspan="3">
-      <widget class="QLabel" name="p_3">
+      <widget class="QLabel" name="p_2">
        <property name="frameShape">
         <enum>QFrame::Box</enum>
        </property>
@@ -342,7 +342,7 @@
     <string>&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="hint">
    <property name="geometry">
     <rect>
      <x>50</x>
@@ -373,22 +373,28 @@
     <string>关闭</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="back">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>560</y>
+     <width>80</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>返回</string>
+   </property>
+  </widget>
  </widget>
  <tabstops>
   <tabstop>fomer</tabstop>
   <tabstop>latter</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_6</tabstop>
-  <tabstop>pushButton_4</tabstop>
+  <tabstop>ok_1</tabstop>
+  <tabstop>ok_2</tabstop>
+  <tabstop>ok_3</tabstop>
+  <tabstop>ok_4</tabstop>
   <tabstop>close</tabstop>
-  <tabstop>pushButton_10</tabstop>
-  <tabstop>pushButton_12</tabstop>
-  <tabstop>pushButton_11</tabstop>
-  <tabstop>pushButton_5</tabstop>
-  <tabstop>pushButton_13</tabstop>
-  <tabstop>pushButton_14</tabstop>
-  <tabstop>pushButton_2</tabstop>
  </tabstops>
  <resources/>
  <connections/>
