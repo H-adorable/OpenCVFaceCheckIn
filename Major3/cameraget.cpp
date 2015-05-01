@@ -113,7 +113,7 @@ void CameraGet::recordClient()
     //    }
 
     if(isFace && tic != 0 && nFaces <= n){
-        std::string fileName = "temp_" + (QString::number(nFaces)).toStdString() + ".jpg";
+        std::string fileName = "temp_" + (QString::number(nFaces)).toStdString() + ".bmp";
         if(cv::imwrite(fileName, faceBuffer)) qDebug() << "store success";
         --tic;
         ++nFaces;

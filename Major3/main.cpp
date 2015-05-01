@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
         std::cout << "Initialization done."<< endl;
 
     ShowFaces s;
-    s.show();
+    s.start(1,"");
 
 
 //    Welcome w;
