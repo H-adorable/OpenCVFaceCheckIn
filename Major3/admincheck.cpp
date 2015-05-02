@@ -34,16 +34,20 @@ void AdminCheck::on_password_returnPressed()
 
 void AdminCheck::on_ok_clicked()
 {
-//    qDebug() << ui->password->text();
-
     if(ui->password->text() == password){
         emit confirmed(5, "");
         close();
     }
     else{
         qDebug() << "Administor check failed.";
-        emit refused(5, 0, "");
-        close();
+        if(QMessageBox::critical(this,
+                              "警告",
+                              "验证码错误！",
+                              QMessageBox::Close) == QMessageBox::Close){
+            ui->password->clear();
+            emit back(1);
+            close();
+        }
     }
 }
 

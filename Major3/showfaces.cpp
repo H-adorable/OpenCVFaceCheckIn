@@ -20,6 +20,8 @@ ShowFaces::ShowFaces(QWidget *parent) :
     pic[2] = ui->p_2;
     pic[3] = ui->p_3;
     pic[4] = ui->p_4;
+
+    header = "../data/temp/temp_";
 }
 
 ShowFaces::~ShowFaces()
@@ -36,7 +38,7 @@ void ShowFaces::start(int x, QString n)
     QImage b;
     QString filename;
     for(int i = 1; i <= 4; ++i){
-        filename = "temp_" + QString::number(i + page) + ".bmp";
+        filename = header + QString::number(i + page) + ".bmp";
         if(b.load(filename))
             pic[i]->setPixmap(QPixmap::fromImage(b));
     }
@@ -53,7 +55,7 @@ void ShowFaces::on_ok_1_clicked()
                              "确认",
                              "是否选择第 1 张图像？",
                              QMessageBox::Ok, QMessageBox::No) == QMessageBox::Ok){
-        QString oldFilename = "temp_" + QString::number(1 + page*4) + ".bmp";
+        QString oldFilename = header + QString::number(1 + page*4) + ".bmp";
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 1 张图像");
@@ -90,7 +92,7 @@ void ShowFaces::on_ok_2_clicked()
                              "确认",
                              "是否选择第 2 张图像？",
                              QMessageBox::Ok, QMessageBox::No) == QMessageBox::Ok){
-        QString oldFilename = "temp_" + QString::number(2 + page*4) + ".bmp";
+        QString oldFilename = header + QString::number(2 + page*4) + ".bmp";
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 2 张图像");
@@ -127,7 +129,7 @@ void ShowFaces::on_ok_3_clicked()
                              "确认",
                              "是否选择第 3 张图像？",
                              QMessageBox::Ok, QMessageBox::No) == QMessageBox::Ok){
-        QString oldFilename = "temp_" + QString::number(3 + page*4) + ".bmp";
+        QString oldFilename = header + QString::number(3 + page*4) + ".bmp";
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 3 张图像");
@@ -164,7 +166,7 @@ void ShowFaces::on_ok_4_clicked()
                              "确认",
                              "是否选择第 4 张图像？",
                              QMessageBox::Ok, QMessageBox::No) == QMessageBox::Ok){
-        QString oldFilename = "temp_" + QString::number(4 + page*4) + ".bmp";
+        QString oldFilename = header + QString::number(4 + page*4) + ".bmp";
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 4 张图像");
@@ -209,7 +211,7 @@ void ShowFaces::on_fomer_clicked()
         QImage b;
         QString filename;
         for(int i = 1; i <= 4; ++i){
-            filename = "temp_" + QString::number(i + page*4) + ".bmp";
+            filename = header + QString::number(i + page*4) + ".bmp";
             if(b.load(filename))
                 pic[i]->setPixmap(QPixmap::fromImage(b));
         }
@@ -223,24 +225,26 @@ void ShowFaces::on_fomer_clicked()
 
 void ShowFaces::on_latter_clicked()
 {
-    QFile f("temp_" + QString::number(1 + page*4) + ".bmp");
-    if(f.isOpen()){
-        ++page;
-
-        // Show these four images
-        QImage b;
-        QString filename;
-        for(int i = 1; i <= 4; ++i){
-            filename = "temp_" + QString::number(i + page*4) + ".bmp";
-            if(b.load(filename))
-                pic[i]->setPixmap(QPixmap::fromImage(b));
-        }
-    }
-    else
+    QImage b;
+    QString filename;
+    ++page;
+    filename = header + QString::number(1 + page*4) + ".bmp";
+    if(!b.load(filename)){
+        --page;
         QMessageBox::critical(this,
                               "警告",
                               "这是最后一页！",
                               QMessageBox::Ok);
+    }
+    else{
+        pic[1]->setPixmap(QPixmap::fromImage(b));
+        for(int i = 2; i <= 4; ++i){
+            filename = header + QString::number(i + page*4) + ".bmp";
+            if(b.load(filename))
+                pic[i]->setPixmap(QPixmap::fromImage(b));
+        }
+    }
+
 }
 
 void ShowFaces::on_back_clicked()
@@ -257,12 +261,12 @@ bool ShowFaces::clearTemps()
 {
     int flag = 2;
     for(int i = 1; i < 50 && flag != 0; ++i){
-        if(!QFile::remove("temp_" + QString::number(i) + ".bmp")){
+        if(!QFile::remove(header + QString::number(i) + ".bmp")){
             --flag;
-            qDebug() <<"temp_" + QString::number(i) + ".bmp 删除失败";
+            qDebug() <<header + QString::number(i) + ".bmp 删除失败";
         }
         else
-            qDebug() << "temp_" + QString::number(i) + ".bmp 已删除";
+            qDebug() << header + QString::number(i) + ".bmp 已删除";
     }
     return true;
 }

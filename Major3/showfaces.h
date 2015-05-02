@@ -61,6 +61,9 @@ private:
 
     // Delete other temp Images;
     bool clearTemps();
+
+    // File Header
+    QString header;
 };
 
 #endif // SHOWFACES_H

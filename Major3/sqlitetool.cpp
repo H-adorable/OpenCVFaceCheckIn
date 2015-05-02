@@ -52,11 +52,13 @@ bool SQLiteTool::isExist(QString x)
 
 }
 
-std::string SQLiteTool::faceImg(QString)
+std::string SQLiteTool::faceImg(QString n)
 {
     // BGR image
     leave();
     return "face.bmp";
+
+
 
 }
 

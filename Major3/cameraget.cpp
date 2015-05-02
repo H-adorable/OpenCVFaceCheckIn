@@ -10,8 +10,6 @@ CameraGet::CameraGet(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    //    check("./data/first.db");
-
     // Timer to control the rate of camera capture (?)
     timer1 = new QTimer(this);
     timer2 = new QTimer(this);
@@ -56,7 +54,7 @@ void CameraGet::start(int x, QString s)
         ui->hint->setText("请面对摄像头并保持严肃");
         cap = cv::VideoCapture(0);
         timer1->start(20);
-        //        emit camera(1);
+        base = cv::imread("base_" + number.toStdString() + ".bmp");
     }
     else if(state == 6){
         // First 'tic' face detection do not use.
@@ -113,7 +111,7 @@ void CameraGet::recordClient()
     //    }
 
     if(isFace && tic != 0 && nFaces <= n){
-        std::string fileName = "temp_" + (QString::number(nFaces)).toStdString() + ".bmp";
+        std::string fileName = "../data/temp/temp_" + (QString::number(nFaces)).toStdString() + ".bmp";
         if(cv::imwrite(fileName, faceBuffer)) qDebug() << "store success";
         --tic;
         ++nFaces;
@@ -218,7 +216,6 @@ void CameraGet::getCamera()
 
 void CameraGet::match()
 {
-    cv::Mat base = cv::imread(check.faceImg(number));
     if(face.imgMatch(faceBuffer,
                      base)){
         faceBuffer.release();

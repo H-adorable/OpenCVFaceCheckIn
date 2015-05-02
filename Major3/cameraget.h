@@ -117,7 +117,8 @@ private:
     // The number of faces camera gets
     int nFaces;
 
-
+    // Base image
+    cv::Mat base;
 
 };
 
