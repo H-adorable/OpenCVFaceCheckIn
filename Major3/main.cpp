@@ -65,6 +65,9 @@ int main(int argc, char *argv[])
     // Connect cameraget and showfaces
     QObject::connect(&c, SIGNAL(showFaces(int, QString)), &s, SLOT(start(int,QString)));
 
+    // Connect showfaces and administor
+    QObject::connect(&s, SIGNAL(back(int)), &ad, SLOT(reShow(int)));
+
 
     return a.exec();
 }

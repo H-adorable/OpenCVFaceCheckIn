@@ -26,9 +26,12 @@ public slots:
 private slots:
     void on_ok_clicked();
 
-    void on_pushButton_2_clicked();
-
     void on_back_clicked();
+
+    void on_check_clicked();
+
+    void on_close_clicked();
+
 signals:
     void back(int);
 

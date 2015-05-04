@@ -37,6 +37,9 @@ public:
     bool search(/*input*/  QString n,
                 /*output*/ QImage& img, QString &name, QString &department, QString &position);
 
+    bool search(/*input*/  QString n,
+                /*output*/ QString &name, QString &department, QString &position);
+
     // Add a row
     bool addRow(/*input*/ QString n, QString name, QString department, QString positon);
 

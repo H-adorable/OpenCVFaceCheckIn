@@ -5,6 +5,7 @@
 #include <QImage>
 #include <QFile>
 #include <QMessageBox>
+#include <QProgressDialog>
 #include <QString>
 
 namespace Ui {
@@ -64,6 +65,9 @@ private:
 
     // File Header
     QString header;
+
+    // Get face success
+    bool goBack();
 };
 
 #endif // SHOWFACES_H

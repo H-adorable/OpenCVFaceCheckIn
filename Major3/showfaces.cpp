@@ -32,7 +32,7 @@ ShowFaces::~ShowFaces()
 void ShowFaces::start(int x, QString n)
 {
     // Get info
-    //    id = n;
+    id = n;
 
     // Show first four images
     QImage b;
@@ -60,6 +60,7 @@ void ShowFaces::on_ok_1_clicked()
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 1 张图像");
             clearTemps();
+            goBack();
         }
         else{
             if(QMessageBox::question(this,
@@ -72,6 +73,7 @@ void ShowFaces::on_ok_1_clicked()
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 1 张图像");
                     clearTemps();
+                    goBack();
                 }
                 else{
                     ui->hint->setText("失败");
@@ -97,6 +99,7 @@ void ShowFaces::on_ok_2_clicked()
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 2 张图像");
             clearTemps();
+            goBack();
         }
         else{
             if(QMessageBox::question(this,
@@ -109,6 +112,7 @@ void ShowFaces::on_ok_2_clicked()
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 2 张图像");
                     clearTemps();
+                    goBack();
                 }
                 else{
                     ui->hint->setText("失败");
@@ -134,6 +138,7 @@ void ShowFaces::on_ok_3_clicked()
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 3 张图像");
             clearTemps();
+            goBack();
         }
         else{
             if(QMessageBox::question(this,
@@ -144,8 +149,9 @@ void ShowFaces::on_ok_3_clicked()
                 f.remove();
                 f.close();
                 if(QFile::rename(oldFilename, newFilename)){
-                    ui->hint->setText("已选择第 1 张图像");
+                    ui->hint->setText("已选择第 3 张图像");
                     clearTemps();
+                    goBack();
                 }
                 else{
                     ui->hint->setText("失败");
@@ -171,6 +177,7 @@ void ShowFaces::on_ok_4_clicked()
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 4 张图像");
             clearTemps();
+            goBack();
         }
         else{
             if(QMessageBox::question(this,
@@ -183,6 +190,7 @@ void ShowFaces::on_ok_4_clicked()
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 4 张图像");
                     clearTemps();
+                    goBack();
                 }
                 else{
                     ui->hint->setText("失败");
@@ -190,7 +198,6 @@ void ShowFaces::on_ok_4_clicked()
             }
             else
                 ui->hint->setText("您取消了保存操作");
-
         }
     }
     else
@@ -249,18 +256,19 @@ void ShowFaces::on_latter_clicked()
 
 void ShowFaces::on_back_clicked()
 {
-    emit back(7);
+    emit back(6);
     close();
     for(int i = 1; i <= 4; ++i){
         pic[i]->clear();
     }
+    clearTemps();
     page = 0;
 }
 
 bool ShowFaces::clearTemps()
 {
     int flag = 2;
-    for(int i = 1; i < 50 && flag != 0; ++i){
+    for(int i = 1; i <= 50 && flag != 0; ++i){
         if(!QFile::remove(header + QString::number(i) + ".bmp")){
             --flag;
             qDebug() <<header + QString::number(i) + ".bmp 删除失败";
@@ -269,4 +277,17 @@ bool ShowFaces::clearTemps()
             qDebug() << header + QString::number(i) + ".bmp 已删除";
     }
     return true;
+}
+
+bool ShowFaces::goBack()
+{
+    if(QMessageBox::information(this,
+                                "提示",
+                                "保存"+id+"的基准图像成功！",
+                                QMessageBox::Ok) == QMessageBox::Ok){
+        emit back(6);
+        close();
+        return true;
+    }
+    return false;
 }

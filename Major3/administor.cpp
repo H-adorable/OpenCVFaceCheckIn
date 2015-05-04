@@ -52,12 +52,30 @@ void Administor::on_ok_clicked()
 
 }
 
-void Administor::on_pushButton_2_clicked()
-{
-    close();
-}
+
 
 void Administor::on_back_clicked()
 {
     emit back(1);
+}
+
+void Administor::on_check_clicked()
+{
+    id = ui->id_3->text();
+
+    // search database
+    if(check.search(id, name, department, position)){
+        ui->name_2->setText(name);
+        ui->department_2->setText(department);
+        ui->position_2->setText(position);
+    }
+    else{
+        ui->hint->setText("错误！此人不存在");
+    }
+
+}
+
+void Administor::on_close_clicked()
+{
+    close();
 }

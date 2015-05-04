@@ -79,10 +79,11 @@ bool SQLiteTool::search(QString n, QImage &img, QString &name, QString &departme
         QString order = "SELECT id, name, department, position FROM client WHERE id = '"+ n + "';";
         qDebug() << order;
         query.exec(/*"SELECT id, name FROM client WHERE id = "+ n*/order);
-        flag = query.next();
-        name = query.value(1).toString();
-        department = query.value(2).toString();
-        position = query.value(3).toString();
+        if(flag = query.next()){
+            name = query.value(1).toString();
+            department = query.value(2).toString();
+            position = query.value(3).toString();
+        }
     }
     else{
         qDebug() << "Opening database" << databaseLocation << " failed.";
@@ -105,24 +106,49 @@ bool SQLiteTool::search(QString n, QImage &img, QString &name, QString &departme
     else{
         return false;
     }
+}
 
+bool SQLiteTool::search(QString n, QString &name, QString &department, QString &position)
+{
+    bool flag = false;
 
-    // Set the connection of database
-//    begin();
+    // Database connection
+    QSqlDatabase clients;
+    // Open a database
+    clients = QSqlDatabase::database("FaceRec");
+    clients.setDatabaseName(databaseLocation);
+    if(clients.open()){
+        qDebug() << "Opening database" << databaseLocation << " success.";
 
-//    if(n == "10"){
-//        img = QImage();
-//        name = "小白";
-//        department = "学生会";
-//        position = "主席";
+        // Search the table
+        QSqlQuery query(clients);
+        QString order = "SELECT id, name, department, position FROM client WHERE id = '"+ n + "';";
+        qDebug() << order;
+        query.exec(/*"SELECT id, name FROM client WHERE id = "+ n*/order);
+        if(flag = query.next()){
+            name = query.value(1).toString();
+            department = query.value(2).toString();
+            position = query.value(3).toString();
+        }
+    }
+    else{
+        qDebug() << "Opening database" << databaseLocation << " failed.";
+        return false;
+    }
+    // Close a database
+    clients.close();
+    if(clients.isOpen())
+        qDebug() << clients.connectionNames();
+    else
+        qDebug() << "close database";
 
-//        // clean up the environment
-//        leave();
-//        return true;
-//    }
-//    leave();
-//    return false;
-
+    // If exist?
+    if(flag){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
 bool SQLiteTool::addRow(QString n, QString name, QString department, QString positon)
