@@ -40,6 +40,8 @@ public:
     bool search(/*input*/  QString n,
                 /*output*/ QString &name, QString &department, QString &position);
 
+    bool search(/*input*/  QString n);
+
     // Add a row
     bool addRow(/*input*/ QString n, QString name, QString department, QString positon);
 
@@ -56,11 +58,11 @@ private:
 //    // Database connection
 //    QSqlDatabase clients;
 
-    // When a method is complete, 'leave()' should be called
-    bool leave();
+//    // When a method is complete, 'leave()' should be called
+//    bool leave();
 
-    // When a method begins, 'begin()' should be called
-    bool begin();
+//    // When a method begins, 'begin()' should be called
+//    bool begin();
 
 };
 

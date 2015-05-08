@@ -47,7 +47,7 @@
     </font>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>3</number>
    </property>
    <widget class="QWidget" name="add">
     <attribute name="title">
@@ -319,7 +319,7 @@
       </font>
      </property>
      <property name="text">
-      <string>确定</string>
+      <string>修改</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="department_3">
@@ -437,7 +437,7 @@
       </font>
      </property>
      <property name="text">
-      <string>确定</string>
+      <string>删除</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="id_4">
@@ -599,7 +599,7 @@
    <property name="font">
     <font>
      <family>微软雅黑</family>
-     <pointsize>14</pointsize>
+     <pointsize>12</pointsize>
     </font>
    </property>
    <property name="text">

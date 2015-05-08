@@ -55,8 +55,8 @@ bool SQLiteTool::isExist(QString x)
 std::string SQLiteTool::faceImg(QString n)
 {
     // BGR image
-    leave();
-    return "face.bmp";
+    QString fileName = "face_" + n + ".bmp";
+    return fileName.toStdString();
 
 
 
@@ -79,7 +79,8 @@ bool SQLiteTool::search(QString n, QImage &img, QString &name, QString &departme
         QString order = "SELECT id, name, department, position FROM client WHERE id = '"+ n + "';";
         qDebug() << order;
         query.exec(/*"SELECT id, name FROM client WHERE id = "+ n*/order);
-        if(flag = query.next()){
+        flag = query.next();
+        if(flag){
             name = query.value(1).toString();
             department = query.value(2).toString();
             position = query.value(3).toString();
@@ -118,18 +119,58 @@ bool SQLiteTool::search(QString n, QString &name, QString &department, QString &
     clients = QSqlDatabase::database("FaceRec");
     clients.setDatabaseName(databaseLocation);
     if(clients.open()){
-        qDebug() << "Opening database" << databaseLocation << " success.";
+        qDebug() << "Check-Opening database" << databaseLocation << " success.";
 
         // Search the table
         QSqlQuery query(clients);
         QString order = "SELECT id, name, department, position FROM client WHERE id = '"+ n + "';";
         qDebug() << order;
         query.exec(/*"SELECT id, name FROM client WHERE id = "+ n*/order);
-        if(flag = query.next()){
+        flag = query.next();
+        if(flag){
             name = query.value(1).toString();
             department = query.value(2).toString();
             position = query.value(3).toString();
         }
+    }
+    else{
+        qDebug() << "Opening database" << databaseLocation << " failed.";
+        return false;
+    }
+    // Close a database
+    clients.close();
+    if(clients.isOpen())
+        qDebug() << clients.connectionNames();
+    else
+        qDebug() << "close database";
+
+    // If exist?
+    if(flag){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+bool SQLiteTool::search(QString n)
+{
+    bool flag = false;
+
+    // Database connection
+    QSqlDatabase clients;
+    // Open a database
+    clients = QSqlDatabase::database("FaceRec");
+    clients.setDatabaseName(databaseLocation);
+    if(clients.open()){
+        qDebug() << "Check-Opening database" << databaseLocation << " success.";
+
+        // Search the table
+        QSqlQuery query(clients);
+        QString order = "SELECT id, name, department, position FROM client WHERE id = '"+ n + "';";
+        qDebug() << order;
+        query.exec(/*"SELECT id, name FROM client WHERE id = "+ n*/order);
+        flag = query.next();
     }
     else{
         qDebug() << "Opening database" << databaseLocation << " failed.";
@@ -191,6 +232,77 @@ bool SQLiteTool::addRow(QString n, QString name, QString department, QString pos
 
 }
 
+bool SQLiteTool::deleteRow(QString n)
+{
+    // Database connection
+    QSqlDatabase clients;
+    bool flag;
+    // Open a database
+    clients = QSqlDatabase::addDatabase("QSQLITE", "FaceRec");
+    clients.setDatabaseName(databaseLocation);
+    if(clients.open()){
+
+        // Close a database
+        qDebug() << "Opening database" << databaseLocation << " success.";
+
+        QSqlQuery q(clients);
+        QString order = "DELETE FROM client WHERE id = '" + n + "';";
+        qDebug() << order;
+        flag = q.exec(order);
+    }
+    else{
+        qDebug() << "Opening database" << databaseLocation << " failed.";
+        return false;
+    }
+    // Close a database
+    clients.close();
+    qDebug() << "close database";
+    if(flag){
+        if(!search(n))
+            return true;
+    }
+    else
+        return false;
+    return false;
+}
+
+bool SQLiteTool::updateRow(QString n, QString name, QString department, QString positon)
+{
+    // Database connection
+    QSqlDatabase clients;
+    bool flag;
+    // Open a database
+    clients = QSqlDatabase::addDatabase("QSQLITE", "FaceRec");
+    clients.setDatabaseName(databaseLocation);
+    if(clients.open()){
+
+        // Close a database
+        qDebug() << "Opening database" << databaseLocation << " success.";
+
+        QSqlQuery q(clients);
+        QString order = "UPDATE client SET name = '" + name
+                + "', department = '" + department
+                + "', position = '" + positon
+                + "' WHERE id = '" + n + "';";
+        qDebug() << order;
+        flag = q.exec(order);
+    }
+    else{
+        qDebug() << "Opening database" << databaseLocation << " failed.";
+        return false;
+    }
+    // Close a database
+    clients.close();
+    qDebug() << "close database";
+    if(flag){
+        if(search(n, name, department, positon))
+            return true;
+    }
+    else
+        return false;
+    return false;
+}
+
 bool SQLiteTool::initial()
 {
 
@@ -231,28 +343,5 @@ bool SQLiteTool::initial()
 
 }
 
-bool SQLiteTool::leave()
-{
-    //    //    delete clients;
-    //    if(clients.isOpen())
-    //        qDebug() << clients.connectionNames();
-    //    qDebug() << "close database";
-    return true;
-}
 
-bool SQLiteTool::begin()
-{
-    //    clients.close();
-    //    clients = QSqlDatabase::addDatabase("QSQLITE", "FaceRec");
-    //    clients.setDatabaseName(databaseLocation);
-    //    if(!clients.open()){
-    //        qDebug() << "Opening database" << databaseLocation << " failed.";
-    //        return false;
-    //    }
-    //    else{
-    //        qDebug() << "Opening database" << databaseLocation << " success.";
-    //        return true;
-    //    }
-
-}
 
