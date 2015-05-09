@@ -5,7 +5,7 @@
 
 SQLiteTool::SQLiteTool()
 {
-
+    QString header = "../data/";
 }
 
 SQLiteTool::~SQLiteTool()
@@ -97,7 +97,7 @@ bool SQLiteTool::search(QString n, QImage &img, QString &name, QString &departme
     else
         qDebug() << "close database";
 
-    QString imageName = "../data/std_" + n + ".jpg";
+    QString imageName = header + "std_" + n + ".jpg";
     img.load(imageName);
 
     // If exist?
@@ -258,8 +258,14 @@ bool SQLiteTool::deleteRow(QString n)
     clients.close();
     qDebug() << "close database";
     if(flag){
-        if(!search(n))
+        if(!search(n)){
+            if(!QFile::remove(header + "base_" + n+ ".bmp")){
+                qDebug() <<header + "base_" + n + ".bmp 删除失败";
+            }
+            else
+                qDebug() << header + "base_" + n + ".bmp 已删除";
             return true;
+        }
     }
     else
         return false;

@@ -64,6 +64,9 @@ private:
 //    // When a method begins, 'begin()' should be called
 //    bool begin();
 
+    // Where the base and standrad image store
+    QString header;
+
 };
 
 #endif // SQLITETOOL_H

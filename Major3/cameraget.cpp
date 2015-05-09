@@ -48,13 +48,13 @@ void CameraGet::start(int x, QString s)
     state = x;
     if(state == 1){
         // First 'tic' face detection do not use.
-        tic = 20;
+        tic = 50;
         // Initial nFaces
         nFaces = 1;
         ui->hint->setText("请面对摄像头并保持严肃");
         cap = cv::VideoCapture(0);
         timer1->start(20);
-        base = cv::imread("base_" + number.toStdString() + ".bmp");
+        base = cv::imread("../data/base_" + number.toStdString() + ".bmp");
     }
     else if(state == 6){
         // First 'tic' face detection do not use.
@@ -154,14 +154,6 @@ void CameraGet::getCamera()
     cap >> cameraBuffer;
 
     cv::Mat grayFace;
-    cv::Mat litghtBuffer;
-
-    //    cv::cvtColor(cameraBuffer, grayCamera, CV_BGR2GRAY);
-
-    //    // Do histogram equalization to decrease the infulence of light
-    //    cv::equalizeHist(grayCamera, litghtBuffer);
-
-    //    cv::imshow("dd", litghtBuffer);
 
     // Detect wheather face exists
     isFace = face.detect(cameraBuffer,
@@ -198,15 +190,21 @@ void CameraGet::getCamera()
             timer1->stop();
             close();
             qDebug() << "Camera closed.";
-            emit noFace(2, 2, number);
+//            emit noFace(2, 2, number);
+            if(QMessageBox::information(this,
+                                     "验证失败",
+                                     "验证失败\n返回或关闭",
+                                     "返回") == 0){
+                emit back(1);
+            }
             qDebug() << "noFace signal sent.(cameraGet)";
             ui->camBack->clear();
         }
     }
     else{
         --tic;
-        //        if(tic < 15)
-        //            emit getFace(faceBuffer);
+        if(tic < 40)
+            emit getFace(faceBuffer);
     }
 
     std::cout << tic;
@@ -227,6 +225,9 @@ void CameraGet::match()
         emit confirmed(2, number);
         qDebug() << "Confirmed signal sent.(cameraGet)";
 
+    }
+    else if(tic != 0){
+        ////
     }
     else{
         faceBuffer.release();

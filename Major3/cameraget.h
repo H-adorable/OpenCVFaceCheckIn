@@ -7,6 +7,7 @@
 
 #include <QDialog>
 #include <QTimer>
+#include <QMessageBox>
 #include <core/core.hpp>
 #include <highgui/highgui.hpp>
 #include <imgproc/imgproc.hpp>

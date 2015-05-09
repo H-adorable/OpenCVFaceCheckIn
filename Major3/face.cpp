@@ -9,7 +9,7 @@ Face::Face()
 {
     // Indecate the path of cascade.
     cascadeName = "D:/github/OpenCVFaceCheckIn/Major3/haarcascades/haarcascade_frontalface_alt.xml";
-    matchThreshold = 160;
+    matchThreshold = 200;
     judgeThreshold = 0.1;
 }
 

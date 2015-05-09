@@ -32,22 +32,24 @@ void Administor::on_ok_clicked()
     department = ui->department->text();
     position = ui->position->text();
 
-    if(check.isExist(id))
-        ui->hint->setText("已存在，添加失败");
+    if(id != "" && check.isExist(id)){
+        ui->hint->setText(id + "已存在，添加失败");
+    }
     else{
-        if(check.addRow(id, name, department, position)){
-            QString hintText = "编号\t姓名\t部门\t职位\n"
-                    + id + "\t" + name + "\t" + department + "\t" + position + "\n添加成功";
-            ui->hint->setText(hintText);
-            emit catchFace(6, id);
-            close();
+        if(id != "" && name != "" && department != "" && position != ""){
+            if(check.addRow(id, name, department, position)){
+                QString hintText = "编号\t姓名\t部门\t职位\n"
+                        + id + "\t" + name + "\t" + department + "\t" + position + "\n添加成功";
+                ui->hint->setText(hintText);
+                emit catchFace(6, id);
+                close();
+            }
+            else
+                ui->hint->setText("添加失败");
         }
-        else
-            ui->hint->setText("添加失败");
-        //        ui->id->clear();
-        //        ui->name->clear();
-        //        ui->department->clear();
-        //        ui->position->clear();
+        else{
+            ui->hint->setText("请填写所有项目");
+        }
     }
 
 }
@@ -57,11 +59,13 @@ void Administor::on_ok_clicked()
 void Administor::on_back_clicked()
 {
     clearAll();
+    close();
     emit back(1);
 }
 
 void Administor::on_check_clicked()
 {
+    ui->hint->clear();
     id = ui->id_2->text();
 
     // search database
@@ -182,8 +186,10 @@ void Administor::on_check_3_clicked()
     }
 }
 
+// delete a row
 void Administor::on_ok_4_clicked()
 {
+
     if(isChecked){
         isChecked = false;
 
@@ -193,18 +199,30 @@ void Administor::on_ok_4_clicked()
         department = ui->department_4->text();
         position = ui->position_4->text();
 
-        // update data
-        if(check.deleteRow(id)){
-            QString hintText = "编号\t姓名\t部门\t职位\n"
-                    + id + "\t" + name + "\t" + department + "\t" + position + "\n已删除";
-            ui->hint->setText(hintText);
-            ui->id_4->clear();
-            ui->name_4->clear();
-            ui->department_4->clear();
-            ui->position_4->clear();
+        if(QMessageBox::question(this,
+                                 "删除确认",
+                                 "确定要删除 " + id + " 这个用户吗？",
+                                 QMessageBox::Yes,
+                                 QMessageBox::No) == QMessageBox::Yes){
+
+            // update data
+            if(check.deleteRow(id)){
+                QString hintText = "编号\t姓名\t部门\t职位\n"
+                        + id + "\t" + name + "\t" + department + "\t" + position + "\n已删除";
+                ui->hint->setText(hintText);
+                ui->id_4->clear();
+                ui->name_4->clear();
+                ui->department_4->clear();
+                ui->position_4->clear();
+            }
+            else
+                ui->hint->setText("删除失败！");
         }
-        else
-            ui->hint->setText("删除失败！");
+        else{
+            QString hintText = "编号\t姓名\t部门\t职位\n"
+                    + id + "\t" + name + "\t" + department + "\t" + position + "\n未删除";
+            ui->hint->setText(hintText);
+        }
     }
     else
         ui->hint->setText("请先点击[查找]");

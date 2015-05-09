@@ -36,6 +36,7 @@ void AdminCheck::on_ok_clicked()
 {
     if(ui->password->text() == password){
         emit confirmed(5, "");
+        ui->password->clear();
         close();
     }
     else{
