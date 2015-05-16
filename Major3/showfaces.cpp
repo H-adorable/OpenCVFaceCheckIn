@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+const int nStore = 100;
 ShowFaces::ShowFaces(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::ShowFaces)
@@ -15,11 +16,19 @@ ShowFaces::ShowFaces(QWidget *parent) :
     // Page number initialize
     page = 0;
 
+    // Initial picture labels array
     pic[0] = NULL;
     pic[1] = ui->p_1;
     pic[2] = ui->p_2;
     pic[3] = ui->p_3;
     pic[4] = ui->p_4;
+
+    // Initial push puttoms array
+    ok[0] = NULL;
+    ok[1] = ui->ok_1;
+    ok[2] = ui->ok_2;
+    ok[3] = ui->ok_3;
+    ok[4] = ui->ok_4;
 
     header = "../data/temp/temp_";
 }
@@ -219,8 +228,15 @@ void ShowFaces::on_fomer_clicked()
         QString filename;
         for(int i = 1; i <= 4; ++i){
             filename = header + QString::number(i + page*4) + ".bmp";
-            if(b.load(filename))
+            if(b.load(filename)){
                 pic[i]->setPixmap(QPixmap::fromImage(b));
+                ok[i]->setEnabled(true);
+            }
+            else{
+                pic[i]->clear();
+                ok[i]->setEnabled(false);
+            }
+
         }
     }
     else
@@ -247,8 +263,14 @@ void ShowFaces::on_latter_clicked()
         pic[1]->setPixmap(QPixmap::fromImage(b));
         for(int i = 2; i <= 4; ++i){
             filename = header + QString::number(i + page*4) + ".bmp";
-            if(b.load(filename))
+            if(b.load(filename)){
                 pic[i]->setPixmap(QPixmap::fromImage(b));
+                ok[i]->setEnabled(true);
+            }
+            else{
+                pic[i]->clear();
+                ok[i]->setEnabled(false);
+            }
         }
     }
 
@@ -256,19 +278,26 @@ void ShowFaces::on_latter_clicked()
 
 void ShowFaces::on_back_clicked()
 {
-    emit back(6);
-    close();
-    for(int i = 1; i <= 4; ++i){
-        pic[i]->clear();
+    if(QMessageBox::question(this,
+                             "确认",
+                             "放弃保存" + id + " 的所有信息并返回",
+                             QMessageBox::Ok,
+                             QMessageBox::Cancel) == QMessageBox::Ok){
+        emit back(6);
+        close();
+        for(int i = 1; i <= 4; ++i){
+            pic[i]->clear();
+        }
+        clearTemps();
+        page = 0;
+        check.deleteRow(id);
     }
-    clearTemps();
-    page = 0;
 }
 
 bool ShowFaces::clearTemps()
 {
     int flag = 2;
-    for(int i = 1; i <= 50 && flag != 0; ++i){
+    for(int i = 1; i <= nStore && flag != 0; ++i){
         if(!QFile::remove(header + QString::number(i) + ".bmp")){
             --flag;
             qDebug() <<header + QString::number(i) + ".bmp 删除失败";

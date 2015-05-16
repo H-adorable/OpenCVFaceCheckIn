@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QString>
 #include <QMessageBox>
+#include <QThread>
 
 #include <sqlitetool.h>
 
@@ -46,6 +47,9 @@ private slots:
     void on_id_4_returnPressed();
 
     void on_id_3_returnPressed();
+
+    // Delay x second
+    bool delay(int x);
 
 signals:
     void back(int);

@@ -3,6 +3,9 @@
 
 #include <QDebug>
 
+// 'n' faces stored
+const int nStore = 100;
+
 CameraGet::CameraGet(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraGet)
@@ -87,8 +90,6 @@ void CameraGet::recordClient()
     // Convert number to 'string'
     //    std::string s = number.toStdString();
     bool isFace;
-    // 'n' faces stored
-    int n = 50;
     // Get image
     cap >> cameraBuffer;
 
@@ -110,13 +111,13 @@ void CameraGet::recordClient()
     //        cv::imwrite(s+"face.jpg", faceBuffer);
     //    }
 
-    if(isFace && tic != 0 && nFaces <= n){
+    if(isFace && tic != 0 && nFaces <= nStore){
         std::string fileName = "../data/temp/temp_" + (QString::number(nFaces)).toStdString() + ".bmp";
         if(cv::imwrite(fileName, faceBuffer)) qDebug() << "store success";
         --tic;
         ++nFaces;
     }
-    else if(tic == 0 || nFaces > n){
+    else if(tic == 0 || nFaces > nStore){
         faceBuffer.release();
         cap.release();
         timer2->stop();

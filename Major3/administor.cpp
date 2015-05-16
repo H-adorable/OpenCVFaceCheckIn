@@ -39,8 +39,9 @@ void Administor::on_ok_clicked()
         if(id != "" && name != "" && department != "" && position != ""){
             if(check.addRow(id, name, department, position)){
                 QString hintText = "编号\t姓名\t部门\t职位\n"
-                        + id + "\t" + name + "\t" + department + "\t" + position + "\n添加成功";
+                        + id + "\t" + name + "\t" + department + "\t" + position + "\n开始捕获图像";
                 ui->hint->setText(hintText);
+                delay(2);
                 emit catchFace(6, id);
                 close();
             }
@@ -242,4 +243,9 @@ void Administor::on_id_3_returnPressed()
         emit ui->check_2->clicked();
     else
         emit ui->ok_3->clicked();
+}
+
+bool Administor::delay(int x)
+{
+    QThread::msleep(100 * x);
 }

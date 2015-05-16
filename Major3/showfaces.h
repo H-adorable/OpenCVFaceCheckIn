@@ -7,6 +7,7 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QString>
+#include "sqlitetool.h"
 
 namespace Ui {
 class ShowFaces;
@@ -60,6 +61,9 @@ private:
     // Array of image lable, pic[0] = NULL
     QLabel* pic[5];
 
+    // Array of ok buttom, ok[0] = NULL
+    QPushButton* ok[5];
+
     // Delete other temp Images;
     bool clearTemps();
 
@@ -68,6 +72,9 @@ private:
 
     // Get face success
     bool goBack();
+
+    // SQLite tool object
+    SQLiteTool check;
 };
 
 #endif // SHOWFACES_H

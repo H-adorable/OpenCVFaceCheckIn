@@ -77,7 +77,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
     extractor.compute(cam, camKey, camDes);
     extractor.compute(base, baseKey, baseDes);
 
-    // Match descriptors
+    // Brute Force Match descriptors
     BFMatcher matcher(NORM_L2, true);
     vector< vector<DMatch> > matches;
     matcher.radiusMatch(baseDes, camDes, matches, matchThreshold);
