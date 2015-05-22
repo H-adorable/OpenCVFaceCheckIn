@@ -13,7 +13,14 @@
 #include <iterator>
 #include <stdio.h>
 
+#include <QString>
+#include <QDir>
+#include <QDebug>
+#include <string>
+#include <iostream>
+
 //#include "environment.h"
+#include <defs.h>
 
 class Face
 {
@@ -35,6 +42,9 @@ public:
 
     // Match two image with keypoints
     bool keyMatch(cv::Mat, cv::Mat);
+
+    // Match with Lowe's Algorithm
+    bool LoweMatch(cv::Mat &base, cv::Mat &cam);
 
 private:
     std::string cascadeName;

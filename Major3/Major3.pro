@@ -21,7 +21,9 @@ SOURCES += main.cpp\
     admincheck.cpp \
     sqlitetool.cpp \
     administor.cpp \
-    showfaces.cpp
+    showfaces.cpp \
+    util.cpp \
+    l_match.cpp
 
 HEADERS  += welcome.h \
     cameraget.h \
@@ -32,7 +34,8 @@ HEADERS  += welcome.h \
     sqlitetool.h \
     environment.h \
     administor.h \
-    showfaces.h
+    showfaces.h \
+    defs.h
 
 FORMS    += welcome.ui \
     cameraget.ui \

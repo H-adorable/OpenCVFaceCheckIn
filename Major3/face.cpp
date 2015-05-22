@@ -65,7 +65,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
 
 
     // Detect SIFT keypoints
-    SiftDescriptorExtractor detector;
+    /*SiftDescriptorExtractor detector;
     vector<KeyPoint> camKey, baseKey;
 
     detector.detect(cam, camKey);
@@ -80,7 +80,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
     // Brute Force Match descriptors
     BFMatcher matcher(NORM_L2, true);
     vector< vector<DMatch> > matches;
-    matcher.radiusMatch(baseDes, camDes, matches, matchThreshold);
+    matcher.radiusMatch(camDes, baseDes, matches, matchThreshold);
 
     // Counting maches = num
     int num = 0;
@@ -95,7 +95,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
          << "correct rate:\t" << (double)num / int(camKey.size() < baseKey.size() ? camKey.size() : baseKey.size())<< endl;
 
     Mat img_match;
-    drawMatches(base, baseKey, cam, camKey, matches, img_match);//,Scalar::all(-1),Scalar::all(-1),vector<char>(),drawmode);
+    drawMatches(cam, camKey, base, baseKey, matches, img_match);//,Scalar::all(-1),Scalar::all(-1),vector<char>(),drawmode);
     imshow("matches",img_match);
 
     // Judge
@@ -106,7 +106,91 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
         return false;
     }
 
-//    return true;
+//    return true;*/
+
+    // Initialize sift facts
+    SIFT sift(0, 3, 0.03, 10, 1.6);
+    vector<KeyPoint> camKeys, baseKeys;
+    Mat camDescriptors, baseDescriptors;
+    sift(cam, noArray(), camKeys, camDescriptors);
+    sift(base, noArray(), baseKeys, baseDescriptors);
+
+    FlannBasedMatcher FBMatcher;
+    vector<Mat> trainDescriptors (1, baseDescriptors);
+    FBMatcher.add(trainDescriptors);
+    FBMatcher.train();
+    vector< vector<DMatch> > matches;
+    FBMatcher.knnMatch(camDescriptors, matches, 2);
+    vector<DMatch> goodmatches;
+    for(int i = 0; i<matches.size(); ++i){
+        if(matches[i][0].distance < 0.6*matches[i][1].distance){
+            goodmatches.push_back(matches[i][0]);
+        }
+    }
+//    Mat img_match;
+//    drawMatches(cam, camKeys, base, baseKeys, goodmatches, img_match);//,Scalar::all(-1), DrawMatchesFlags::DRAW_RICH_KEYPOINTS);
+//    imshow("matches", img_match);
+
+
+    cout << "We have: " << goodmatches.size() << " matches"<< endl;
+
+    if(goodmatches.size() > 6)
+        return true;
+    else
+        return false;
+
+}
+
+bool Face::LoweMatch(Mat& base, Mat& cam)
+{
+    QString basefile = QDir::currentPath() + "/match/matchBase";
+    QString camfile  = QDir::currentPath() + "/match/matchCam";
+
+    // turn to grayscale
+    if(cam.channels() != 1)
+        cvtColor(cam, cam, CV_BGR2GRAY);
+    if(base.channels() != 1)
+        cvtColor(base, base, CV_BGR2GRAY);
+
+    imwrite(basefile.toStdString() + ".pgm" , base);
+    imwrite(camfile.toStdString() +".pgm", cam);
+
+    qDebug() << QDir::currentPath();
+
+//    QString file1 = QDir::currentPath() + "/data/face1";
+//    QString file2 = QDir::currentPath() + "/data/face2";
+    QString program = QDir::currentPath() + "/siftWin32.exe";
+
+    string c1 = program.toStdString() + " <" + basefile.toStdString() + ".pgm" + " >" + basefile.toStdString() + ".key";
+    string c2 = program.toStdString() + " <" + camfile.toStdString() + ".pgm" + " >" + camfile.toStdString() + ".key";
+
+//    cout  << c1 << endl;
+//    cout  << c2 << endl;
+
+    int re = system(c1.c_str());
+//    qDebug() << re;
+    if(re!=0)
+        return false;
+    re = system(c2.c_str());
+//    qDebug() << re;
+    if(re!=0)
+        return false;
+
+
+    vector<string> commend;
+    commend.push_back(basefile.toStdString() + ".pgm");
+    commend.push_back(camfile.toStdString() + ".pgm");
+    commend.push_back(basefile.toStdString() + ".key");
+    commend.push_back(camfile.toStdString() + ".key");
+
+
+    int x = match(commend);
+    cout << "We found " << x << " match" << endl;
+
+    if(x>10)
+        return true;
+    else
+        return false;
 
 }
 
@@ -116,7 +200,7 @@ bool Face::detectAndDraw(Mat img, Mat &faceSlice,
                          double scale, bool tryflip)
 {
     int i = 0;
-    double t = 0;
+    //double t = 0;
     vector<Rect> faces, faces2;
     const static Scalar colors[] =  { CV_RGB(0,0,255),
                                       CV_RGB(0,128,255),
@@ -132,7 +216,7 @@ bool Face::detectAndDraw(Mat img, Mat &faceSlice,
     resize( gray, smallImg, smallImg.size(), 0, 0, INTER_LINEAR );
     equalizeHist( smallImg, smallImg );
 
-    t = (double)cvGetTickCount();
+    //t = (double)cvGetTickCount();
     cascade.detectMultiScale( smallImg, faces,
                               1.1, 2, 0
                               //|CV_HAAR_FIND_BIGGEST_OBJECT
@@ -155,9 +239,9 @@ bool Face::detectAndDraw(Mat img, Mat &faceSlice,
             faces.push_back(Rect(smallImg.cols - r->x - r->width, r->y, r->width, r->height));
         }
     }
-    t = (double)cvGetTickCount() - t;
+    //t = (double)cvGetTickCount() - t;
     //    printf( "detection time = %g ms\n", t/((double)cvGetTickFrequency()*1000.) );
-    cout << "detection time =" << t/((double)cvGetTickFrequency()*1000.) << "ms" << endl;
+    //cout << "detection time =" << t/((double)cvGetTickFrequency()*1000.) << "ms" << endl;
     //    bool faceFlag = false;
 
     // Get the pic of face.

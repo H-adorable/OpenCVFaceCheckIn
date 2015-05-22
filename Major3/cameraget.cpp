@@ -169,8 +169,8 @@ void CameraGet::getCamera()
                            QImage::Format_RGB888);
     ui->camBack->setPixmap(QPixmap::fromImage(displayBuffer));
 
-    if(!faceBuffer.empty())
-        cv::imshow( "face", faceBuffer );
+//    if(!faceBuffer.empty())
+//        cv::imshow( "face", faceBuffer );
 
     // If get a face send the signal.
 
@@ -204,11 +204,11 @@ void CameraGet::getCamera()
     }
     else{
         --tic;
-        if(tic < 40)
+        if(tic < 40 && isFace)
             emit getFace(faceBuffer);
     }
 
-    std::cout << tic;
+    //std::cout << tic;
 
     //    QCoreApplication::processEvents();
 }
@@ -217,6 +217,7 @@ void CameraGet::match()
 {
     if(face.imgMatch(faceBuffer,
                      base)){
+//    if(face.LoweMatch(base, faceBuffer)){
         faceBuffer.release();
         cap.release();
         timer1->stop();
@@ -237,7 +238,13 @@ void CameraGet::match()
         ui->camBack->clear();
         close();
         qDebug() << "Camera closed.";
-        emit refused(2, 1, number);
+//        emit refused(2, 1, number);
+        if(QMessageBox::critical(this,
+                              "拒绝",
+                              "验证失败，拒绝进入！",
+                              "返回") == 0){
+            on_back_clicked();
+        }
         qDebug() << "Refused signal sent.(cameraGet)";
     }
 }
