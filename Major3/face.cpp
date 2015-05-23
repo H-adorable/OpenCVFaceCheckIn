@@ -141,6 +141,52 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
 
 }
 
+bool Face::descriptorMatch(Mat &cam, Mat &baseDescriptors)
+{
+    // turn to grayscale
+    if(cam.channels() != 1)
+        cvtColor(cam, cam, CV_BGR2GRAY);
+
+    SIFT sift(0, 3, 0.03, 10, 1.6);
+    vector<KeyPoint> camKeys;
+    Mat camDescriptors;
+    sift(cam, noArray(), camKeys, camDescriptors);
+
+    FlannBasedMatcher FBMatcher;
+    vector<Mat> trainDescriptors (1, baseDescriptors);
+    FBMatcher.add(trainDescriptors);
+    FBMatcher.train();
+    vector< vector<DMatch> > matches;
+    FBMatcher.knnMatch(camDescriptors, matches, 2);
+    vector<DMatch> goodmatches;
+    for(int i = 0; i<matches.size(); ++i){
+        if(matches[i][0].distance < 0.6*matches[i][1].distance){
+            goodmatches.push_back(matches[i][0]);
+        }
+    }
+
+    cout << "We have: " << goodmatches.size() << " matches"<< endl;
+
+    if(goodmatches.size() > 6)
+        return true;
+    else
+        return false;
+
+}
+
+Mat Face::generateDescriptors(Mat img)
+{
+    if(img.channels() != 1)
+        cvtColor(img, img, CV_BGR2GRAY);
+    SIFT sift(0, 3, 0.03, 10, 1.6);
+    vector<KeyPoint> keys;
+    Mat descriptors;
+    sift(img, noArray(), keys, descriptors);
+    return descriptors;
+
+}
+
+
 bool Face::LoweMatch(Mat& base, Mat& cam)
 {
     QString basefile = QDir::currentPath() + "/match/matchBase";

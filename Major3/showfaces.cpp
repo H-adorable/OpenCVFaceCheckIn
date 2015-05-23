@@ -68,6 +68,8 @@ void ShowFaces::on_ok_1_clicked()
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 1 张图像");
+            if(newDes(newFilename))
+                qDebug() << "Descriptors stored." ;
             clearTemps();
             goBack();
         }
@@ -81,6 +83,8 @@ void ShowFaces::on_ok_1_clicked()
                 f.close();
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 1 张图像");
+                    if(newDes(newFilename))
+                        qDebug() << "Descriptors stored." ;
                     clearTemps();
                     goBack();
                 }
@@ -107,6 +111,8 @@ void ShowFaces::on_ok_2_clicked()
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 2 张图像");
+            if(newDes(newFilename))
+                qDebug() << "Descriptors stored." ;
             clearTemps();
             goBack();
         }
@@ -120,6 +126,8 @@ void ShowFaces::on_ok_2_clicked()
                 f.close();
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 2 张图像");
+                    if(newDes(newFilename))
+                        qDebug() << "Descriptors stored." ;
                     clearTemps();
                     goBack();
                 }
@@ -146,6 +154,8 @@ void ShowFaces::on_ok_3_clicked()
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 3 张图像");
+            if(newDes(newFilename))
+                qDebug() << "Descriptors stored." ;
             clearTemps();
             goBack();
         }
@@ -159,6 +169,8 @@ void ShowFaces::on_ok_3_clicked()
                 f.close();
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 3 张图像");
+                    if(newDes(newFilename))
+                        qDebug() << "Descriptors stored." ;
                     clearTemps();
                     goBack();
                 }
@@ -185,6 +197,8 @@ void ShowFaces::on_ok_4_clicked()
         QString newFilename = "../data/base_" + id + ".bmp";
         if(QFile::rename(oldFilename, newFilename)){
             ui->hint->setText("已选择第 4 张图像");
+            if(newDes(newFilename))
+                qDebug() << "Descriptors stored." ;
             clearTemps();
             goBack();
         }
@@ -198,6 +212,8 @@ void ShowFaces::on_ok_4_clicked()
                 f.close();
                 if(QFile::rename(oldFilename, newFilename)){
                     ui->hint->setText("已选择第 4 张图像");
+                    if(newDes(newFilename))
+                        qDebug() << "Descriptors stored." ;
                     clearTemps();
                     goBack();
                 }
@@ -319,4 +335,15 @@ bool ShowFaces::goBack()
         return true;
     }
     return false;
+}
+
+bool ShowFaces::newDes(QString &filename)
+{
+    cv::Mat img = cv::imread(filename.toStdString(), CV_LOAD_IMAGE_GRAYSCALE);
+    cv::Mat descriptors = face.generateDescriptors(img);
+    std::string desName = "../data/base_key_" + id.toStdString() + ".bmp";
+    if(cv::imwrite(desName, descriptors))
+        return true;
+    else
+        return false;
 }

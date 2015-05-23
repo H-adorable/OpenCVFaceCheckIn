@@ -30,8 +30,8 @@ int main(int argc, char *argv[])
     Administor ad;
     ShowFaces s;
 
-    w.setWindowFlags(Qt::FramelessWindowHint);
-    //    c.setWindowFlags(Qt::FramelessWindowHint);
+    //w.setWindowFlags(Qt::FramelessWindowHint);
+    //c.setWindowFlags(Qt::FramelessWindowHint);
     au.setWindowFlags(Qt::FramelessWindowHint);
 
     w.show();
@@ -68,9 +68,11 @@ int main(int argc, char *argv[])
     // Connect showfaces and administor
     QObject::connect(&s, SIGNAL(back(int)), &ad, SLOT(reShow(int)));
 
-    // Connect administor and welcom
+    // Connect administor and welcome
     QObject::connect(&ad, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
+    // Connect authentication and wecome
+    QObject::connect(&au, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
     return a.exec();
 }

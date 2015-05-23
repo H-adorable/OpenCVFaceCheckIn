@@ -6,6 +6,9 @@
 // 'n' faces stored
 const int nStore = 100;
 
+// 'n' times to check
+const int nCheck = 20;
+
 CameraGet::CameraGet(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraGet)
@@ -51,7 +54,7 @@ void CameraGet::start(int x, QString s)
     state = x;
     if(state == 1){
         // First 'tic' face detection do not use.
-        tic = 50;
+        tic = nCheck;
         // Initial nFaces
         nFaces = 1;
         ui->hint->setText("请面对摄像头并保持严肃");
@@ -175,15 +178,16 @@ void CameraGet::getCamera()
     // If get a face send the signal.
 
     if(tic == 0){
+        close();
         if(isFace){
-            // Do histogram equalization to decrease the infulence of light
-            cv::cvtColor( faceBuffer, grayFace, CV_BGR2GRAY );
-            cv::resize( grayFace, faceBuffer, faceBuffer.size(), 0, 0, cv::INTER_LINEAR );
-            cv::equalizeHist( faceBuffer, faceBuffer );
+//            // Do histogram equalization to decrease the infulence of light
+//            cv::cvtColor( faceBuffer, grayFace, CV_BGR2GRAY );
+//            cv::resize( grayFace, faceBuffer, faceBuffer.size(), 0, 0, cv::INTER_LINEAR );
+//            cv::equalizeHist( faceBuffer, faceBuffer );
 
-            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
-            qDebug() << "getFace signal sent.(cameraGet)";
-            emit getFace(faceBuffer);
+//            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
+//            qDebug() << "getFace signal sent.(cameraGet)";
+//            emit getFace(faceBuffer);
         }
         else{
             faceBuffer.release();
@@ -204,11 +208,11 @@ void CameraGet::getCamera()
     }
     else{
         --tic;
-        if(tic < 40 && isFace)
+        if(tic < nCheck-10 && isFace)
             emit getFace(faceBuffer);
     }
 
-    //std::cout << tic;
+//    std::cout << tic;
 
     //    QCoreApplication::processEvents();
 }
@@ -218,14 +222,19 @@ void CameraGet::match()
     if(face.imgMatch(faceBuffer,
                      base)){
 //    if(face.LoweMatch(base, faceBuffer)){
-        faceBuffer.release();
-        cap.release();
-        timer1->stop();
-        ui->camBack->clear();
-        close();
-        qDebug() << "Camera closed.";
-        emit confirmed(2, number);
-        qDebug() << "Confirmed signal sent.(cameraGet)";
+//    cv::Mat baseDescriptors = cv::imread("../data/base_key_" + number.toStdString() + ".bmp");
+//    qDebug() << "load descriptors' channels = " << baseDescriptors.channels();
+//    baseDescriptors.convertTo(baseDescriptors, CV_32F);
+//    qDebug() << "load descriptors' type = " << baseDescriptors.type();
+//    if(face.descriptorMatch(faceBuffer, baseDescriptors)){
+//        faceBuffer.release();
+//        cap.release();
+//        timer1->stop();
+//        ui->camBack->clear();
+//        close();
+//        qDebug() << "Camera closed.";
+//        emit confirmed(2, number);
+//        qDebug() << "Confirmed signal sent.(cameraGet)";
 
     }
     else if(tic != 0){

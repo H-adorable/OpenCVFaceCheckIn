@@ -7,7 +7,12 @@
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QString>
+#include <imgproc/imgproc.hpp>
+#include <core/core.hpp>
+#include <highgui/highgui.hpp>
+#include <string>
 #include "sqlitetool.h"
+#include "face.h"
 
 namespace Ui {
 class ShowFaces;
@@ -75,6 +80,12 @@ private:
 
     // SQLite tool object
     SQLiteTool check;
+
+    // Face class
+    Face face;
+
+    // Generate descrpitor
+    bool newDes(QString& filename);
 };
 
 #endif // SHOWFACES_H

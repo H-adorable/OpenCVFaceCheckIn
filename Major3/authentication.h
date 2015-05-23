@@ -28,6 +28,12 @@ public slots:
 private slots:
     void on_close_clicked();
 
+    void on_back_clicked();
+
+signals:
+    // Back to welcome
+    void back(int x);
+
 private:
     Ui::Authentication *ui;
 

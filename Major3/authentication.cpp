@@ -60,3 +60,12 @@ void Authentication::on_close_clicked()
     qDebug() << "Authentication closed.";
     close();
 }
+
+void Authentication::on_back_clicked()
+{
+    qDebug() << "Authentication closed.";
+    close();
+    qDebug() << "back send";
+    emit back(1);
+
+}

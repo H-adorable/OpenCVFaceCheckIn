@@ -40,8 +40,11 @@ public:
     // Match two image of cut face
     bool imgMatch(cv::Mat, cv::Mat);
 
-    // Match two image with keypoints
-    bool keyMatch(cv::Mat, cv::Mat);
+    // Match with Descriptors(base) and image(cam)
+    bool descriptorMatch(cv::Mat& cam, cv::Mat& baseDescriptors);
+
+    // Generate base descriptors
+    cv::Mat generateDescriptors(cv::Mat img);
 
     // Match with Lowe's Algorithm
     bool LoweMatch(cv::Mat &base, cv::Mat &cam);
