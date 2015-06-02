@@ -28,7 +28,6 @@ HEADERS  += welcome.h \
     authentication.h \
     admincheck.h \
     sqlitetool.h \
-    environment.h \
     administor.h \
     showfaces.h
 
