@@ -203,8 +203,8 @@ void Administor::on_ok_4_clicked()
         if(QMessageBox::question(this,
                                  "删除确认",
                                  "确定要删除 " + id + " 这个用户吗？",
-                                 QMessageBox::Yes,
-                                 QMessageBox::No) == QMessageBox::Yes){
+                                 "确定",
+                                 "取消") == 0){
 
             // update data
             if(check.deleteRow(id)){

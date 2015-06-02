@@ -44,7 +44,7 @@ void AdminCheck::on_ok_clicked()
         if(QMessageBox::critical(this,
                               "警告",
                               "验证码错误！",
-                              QMessageBox::Close) == QMessageBox::Close){
+                              "关闭") == 0){
             ui->password->clear();
             emit back(1);
             close();

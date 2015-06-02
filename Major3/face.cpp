@@ -141,58 +141,6 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
 
 }
 
-bool Face::LoweMatch(Mat& base, Mat& cam)
-{
-    QString basefile = QDir::currentPath() + "/match/matchBase";
-    QString camfile  = QDir::currentPath() + "/match/matchCam";
-
-    // turn to grayscale
-    if(cam.channels() != 1)
-        cvtColor(cam, cam, CV_BGR2GRAY);
-    if(base.channels() != 1)
-        cvtColor(base, base, CV_BGR2GRAY);
-
-    imwrite(basefile.toStdString() + ".pgm" , base);
-    imwrite(camfile.toStdString() +".pgm", cam);
-
-    qDebug() << QDir::currentPath();
-
-//    QString file1 = QDir::currentPath() + "/data/face1";
-//    QString file2 = QDir::currentPath() + "/data/face2";
-    QString program = QDir::currentPath() + "/siftWin32.exe";
-
-    string c1 = program.toStdString() + " <" + basefile.toStdString() + ".pgm" + " >" + basefile.toStdString() + ".key";
-    string c2 = program.toStdString() + " <" + camfile.toStdString() + ".pgm" + " >" + camfile.toStdString() + ".key";
-
-//    cout  << c1 << endl;
-//    cout  << c2 << endl;
-
-    int re = system(c1.c_str());
-//    qDebug() << re;
-    if(re!=0)
-        return false;
-    re = system(c2.c_str());
-//    qDebug() << re;
-    if(re!=0)
-        return false;
-
-
-    vector<string> commend;
-    commend.push_back(basefile.toStdString() + ".pgm");
-    commend.push_back(camfile.toStdString() + ".pgm");
-    commend.push_back(basefile.toStdString() + ".key");
-    commend.push_back(camfile.toStdString() + ".key");
-
-
-    int x = match(commend);
-    cout << "We found " << x << " match" << endl;
-
-    if(x>10)
-        return true;
-    else
-        return false;
-
-}
 
 bool Face::detectAndDraw(Mat img, Mat &faceSlice,
                          CascadeClassifier &cascade,

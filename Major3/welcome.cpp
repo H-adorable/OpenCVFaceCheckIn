@@ -67,7 +67,7 @@ void Welcome::on_checkIn_clicked()
         QMessageBox::information(this,
                                  "提示",
                                  "该编号不存在！",
-                                 QMessageBox::Ok);
+                                 "返回");
 //        emit refused(1, number);
 //        qDebug() << "Refused signal sent.";
 //        close();

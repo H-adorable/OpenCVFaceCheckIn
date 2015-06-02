@@ -6,6 +6,9 @@
 // 'n' faces stored
 const int nStore = 100;
 
+// 'n' times detection
+const int nDetection = 30;
+
 CameraGet::CameraGet(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::CameraGet)
@@ -51,7 +54,7 @@ void CameraGet::start(int x, QString s)
     state = x;
     if(state == 1){
         // First 'tic' face detection do not use.
-        tic = 50;
+        tic = nDetection + 10;
         // Initial nFaces
         nFaces = 1;
         ui->hint->setText("请面对摄像头并保持严肃");
@@ -204,7 +207,7 @@ void CameraGet::getCamera()
     }
     else{
         --tic;
-        if(tic < 40 && isFace)
+        if(tic < nDetection && isFace)
             emit getFace(faceBuffer);
     }
 
@@ -217,7 +220,6 @@ void CameraGet::match()
 {
     if(face.imgMatch(faceBuffer,
                      base)){
-//    if(face.LoweMatch(base, faceBuffer)){
         faceBuffer.release();
         cap.release();
         timer1->stop();

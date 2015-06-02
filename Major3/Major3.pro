@@ -17,30 +17,24 @@ SOURCES += main.cpp\
     cameraget.cpp \
     face.cpp \
     authentication.cpp \
-    alert.cpp \
     admincheck.cpp \
     sqlitetool.cpp \
     administor.cpp \
-    showfaces.cpp \
-    util.cpp \
-    l_match.cpp
+    showfaces.cpp
 
 HEADERS  += welcome.h \
     cameraget.h \
     face.h \
     authentication.h \
-    alert.h \
     admincheck.h \
     sqlitetool.h \
     environment.h \
     administor.h \
-    showfaces.h \
-    defs.h
+    showfaces.h
 
 FORMS    += welcome.ui \
     cameraget.ui \
     authentication.ui \
-    alert.ui \
     admincheck.ui \
     administor.ui \
     showfaces.ui

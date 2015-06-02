@@ -1,7 +1,7 @@
 #include "welcome.h"
 #include "cameraget.h"
 #include "authentication.h"
-#include "alert.h"
+//#include "alert.h"
 #include "admincheck.h"
 #include "administor.h"
 #include "sqlitetool.h"
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
     Welcome w;
     CameraGet c;
     Authentication au;
-    Alert al;
+//    Alert al;
     AdminCheck ac;
     Administor ad;
     ShowFaces s;
@@ -36,8 +36,8 @@ int main(int argc, char *argv[])
 
     w.show();
 
-    // Alert back to welcome all the time
-    QObject::connect(&al, SIGNAL(back(int)), &w, SLOT(reShow(int)));
+//    // Alert back to welcome all the time
+//    QObject::connect(&al, SIGNAL(back(int)), &w, SLOT(reShow(int)));
 
     // Connect welcome and cameraget
     QObject::connect(&w, SIGNAL(confirmed(int, QString)), &c, SLOT(start(int, QString)));
@@ -47,10 +47,10 @@ int main(int argc, char *argv[])
     QObject::connect(&c, SIGNAL(confirmed(int, QString)), &au, SLOT(start(int, QString)));
     //    QObject::connect(&a, SIGNAL())
 
-    // Connect everything and alert
-    QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
-    QObject::connect(&c, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
-    QObject::connect(&ac, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    // Connect everything and alert
+//    QObject::connect(&c, SIGNAL(noFace(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    QObject::connect(&c, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
+//    QObject::connect(&ac, SIGNAL(refused(int,int,QString)), &al, SLOT(start(int,int,QString)));
 
     // Connect welcome and admincheck
     QObject::connect(&w, SIGNAL(administor(int)), &ac, SLOT(start(int)));
