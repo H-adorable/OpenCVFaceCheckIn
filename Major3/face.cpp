@@ -9,8 +9,9 @@ Face::Face()
 {
     // Indecate the path of cascade.
     cascadeName = "D:/github/OpenCVFaceCheckIn/Major3/haarcascades/haarcascade_frontalface_alt.xml";
-    matchThreshold = 200;
-    judgeThreshold = 0.1;
+//    matchThreshold = 200;
+//    judgeThreshold = 0.1;
+    judgeThreshold = 13;
 }
 
 Face::~Face()
@@ -112,6 +113,8 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
     SIFT sift(0, 3, 0.03, 10, 1.6);
     vector<KeyPoint> camKeys, baseKeys;
     Mat camDescriptors, baseDescriptors;
+
+    // Get keypoints and descriptors
     sift(cam, noArray(), camKeys, camDescriptors);
     sift(base, noArray(), baseKeys, baseDescriptors);
 
@@ -123,7 +126,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
     FBMatcher.knnMatch(camDescriptors, matches, 2);
     vector<DMatch> goodmatches;
     for(int i = 0; i<matches.size(); ++i){
-        if(matches[i][0].distance < 0.6*matches[i][1].distance){
+        if(matches[i][0].distance < 0.8*matches[i][1].distance){
             goodmatches.push_back(matches[i][0]);
         }
     }
@@ -134,7 +137,7 @@ bool Face::imgMatch(cv::Mat cam, cv::Mat base)
 
     cout << "We have: " << goodmatches.size() << " matches"<< endl;
 
-    if(goodmatches.size() > 6)
+    if(goodmatches.size() > judgeThreshold)
         return true;
     else
         return false;

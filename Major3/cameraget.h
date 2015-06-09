@@ -16,7 +16,7 @@
 #include "face.h"
 #include "sqlitetool.h"
 
-#include "environment.h"
+
 
 using namespace std;
 

@@ -5,7 +5,6 @@
 #include <QString>
 #include <QMessageBox>
 
-#include "environment.h"
 
 namespace Ui {
 class AdminCheck;

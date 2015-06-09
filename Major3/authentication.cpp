@@ -46,6 +46,11 @@ bool Authentication::infoShow()
         ui->name->setText(name);
         ui->department->setText(department);
         ui->position->setText(position);
+
+//        QImage img;
+//        img.load("../data/coffee.PNG");
+//        ui->standardImage->setPixmap(QPixmap::fromImage(img));
+
         return true;
 
 //        result = "Rejection";

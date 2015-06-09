@@ -53,7 +53,7 @@ void CameraGet::start(int x, QString s)
     number = s;
     state = x;
     if(state == 1){
-        // First 'tic' face detection do not use.
+        // detect 'tic' frames in total
         tic = nDetection + 10;
         // Initial nFaces
         nFaces = 1;
@@ -63,8 +63,8 @@ void CameraGet::start(int x, QString s)
         base = cv::imread("../data/base_" + number.toStdString() + ".bmp");
     }
     else if(state == 6){
-        // First 'tic' face detection do not use.
-        tic = 100;
+        // detect 'tic' frames in total
+        tic = 300;
         // Initial nFaces
         nFaces = 1;
 
@@ -179,13 +179,13 @@ void CameraGet::getCamera()
 
     if(tic == 0){
         if(isFace){
-            // Do histogram equalization to decrease the infulence of light
-            cv::cvtColor( faceBuffer, grayFace, CV_BGR2GRAY );
-            cv::resize( grayFace, faceBuffer, faceBuffer.size(), 0, 0, cv::INTER_LINEAR );
-            cv::equalizeHist( faceBuffer, faceBuffer );
+//            // Do histogram equalization to decrease the infulence of light
+//            cv::cvtColor( faceBuffer, grayFace, CV_BGR2GRAY );
+//            cv::resize( grayFace, faceBuffer, faceBuffer.size(), 0, 0, cv::INTER_LINEAR );
+//            cv::equalizeHist( faceBuffer, faceBuffer );
 
-            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
-            qDebug() << "getFace signal sent.(cameraGet)";
+//            if(cv::imwrite("face5.bmp", faceBuffer)) qDebug() << "success";
+//            qDebug() << "getFace signal sent.(cameraGet)";
             emit getFace(faceBuffer);
         }
         else{
