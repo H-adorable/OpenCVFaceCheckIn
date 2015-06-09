@@ -12,6 +12,12 @@
 int main(int argc, char *argv[])
 {     
 
+    // Create "../data/" folder
+    QDir dirDatabase;
+    if(!dirDatabase.exists("../data/")){
+        dirDatabase.mkdir("../data/");
+        cout << "makepath" << endl;
+    }
     QApplication a(argc, argv);
 
     SQLiteTool sq;
