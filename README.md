@@ -12,6 +12,7 @@ Final Design for Bachelor Degree **(DONE)**
 Research and Impliment of Face recognizasion based on OpenCV
 
 Auther: Heaven Xie
+
 Organization: School of Communication, Beijing Information Science & Technology University **(Graduated with Bachelor Diploma)**
 
 
