@@ -26,5 +26,7 @@ Organization: School of Communication, Beijing Information Science & Technology 
 College of Mathematics and Computer Science, Fuzhou University **(Gradutated student of Computer Science)**
 
 ----------
+
 *CAUTION!!*  This programe includes the 'nonfree' part of OpenCV!!
+
 ----------
