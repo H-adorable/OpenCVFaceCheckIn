@@ -17,7 +17,7 @@
 
 Final Design for Bachelor Degree **(DONE)**
 
-Research and Impliment of Face recognizasion based on OpenCV
+OpenCV Based Face Recognition: Research and Implementation
 
 Auther: Heaven Xie
 
@@ -27,6 +27,6 @@ College of Mathematics and Computer Science, Fuzhou University **(Gradutated stu
 
 ----------
 
-*CAUTION!!*  This programe includes the 'nonfree' part of OpenCV!!
+***CAUTION!!***  This programe includes the 'nonfree' part of OpenCV!!
 
 ----------
